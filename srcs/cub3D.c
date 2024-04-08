@@ -6,7 +6,7 @@
 /*   By: jbarbay <jbarbay@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 12:08:26 by jbarbay           #+#    #+#             */
-/*   Updated: 2024/04/08 22:42:11 by jbarbay          ###   ########.fr       */
+/*   Updated: 2024/04/08 22:43:55 by jbarbay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ int main(int argc, char *argv[])
 	line = get_next_line(fd);
 	while (line && all_args_not_found(data))
 	{
-		// printf("line: %s", line);
 		split_line = ft_split(line, ' ');
 		if (!ft_strncmp(split_line[0], "1", 1))
 		{
@@ -97,8 +96,6 @@ int main(int argc, char *argv[])
 		{
 			ft_putendl_fd("Error", 1);
 			ft_putendl_fd("No space", 1);
-			// printf("Length: %i\n", array_len(split_line));
-			// printf("split_line[0]: %s", split_line[0]);
 			ft_putendl_fd("Please provide arguments as follow: NO ./path_to_the_north_texture", 1);
 			free(split_line); // Free the whole array one by one!!!!
 			close(fd);
