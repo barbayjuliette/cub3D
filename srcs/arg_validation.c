@@ -6,7 +6,7 @@
 /*   By: jbarbay <jbarbay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 12:11:19 by jbarbay           #+#    #+#             */
-/*   Updated: 2024/04/08 18:02:30 by jbarbay          ###   ########.fr       */
+/*   Updated: 2024/04/08 18:17:44 by jbarbay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,7 @@ t_game_data	*get_paths_textures(char *map)
 		else
 			i++;
 	}
+
 	// printf("Path found for north:\n%s\n", data->north_path);
 	// printf("Path found for south:\n%s\n", data->south_path);
 	// printf("Path found for east:\n%s\n", data->east_path);

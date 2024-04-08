@@ -35,7 +35,9 @@ SRCS = ft_atoi.c \
 		ft_printf/ft_printf.c \
 		ft_printf/helpers.c \
 		ft_printf/library.c \
-		ft_printf/conversions.c
+		ft_printf/conversions.c \
+		gnl/get_next_line.c \
+		gnl/get_next_line_utils.c \
 
 BONUS_SRCS = 	ft_lstadd_back_bonus.c \
 			ft_lstnew_bonus.c \

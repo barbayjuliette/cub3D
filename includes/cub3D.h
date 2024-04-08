@@ -6,7 +6,7 @@
 /*   By: jbarbay <jbarbay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 12:10:03 by jbarbay           #+#    #+#             */
-/*   Updated: 2024/04/08 14:36:59 by jbarbay          ###   ########.fr       */
+/*   Updated: 2024/04/08 18:17:19 by jbarbay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@
 #include <fcntl.h>
 #include <stdlib.h>
 #include <unistd.h>
-# include "../libft/libft.h"
+#include "../libft/libft.h"
+#include "../libft/gnl/get_next_line.h"
 
 typedef struct s_game_data
 {
