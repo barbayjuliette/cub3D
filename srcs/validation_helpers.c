@@ -1,32 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3D.c                                            :+:      :+:    :+:   */
+/*   validation_helpers.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jbarbay <jbarbay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/08 12:08:26 by jbarbay           #+#    #+#             */
-/*   Updated: 2024/04/08 14:45:15 by jbarbay          ###   ########.fr       */
+/*   Created: 2024/04/08 14:32:43 by jbarbay           #+#    #+#             */
+/*   Updated: 2024/04/08 14:33:29 by jbarbay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3D.h"
 
-int main(int argc, char *argv[])
+int	ft_strjoin_2(char **map, char *buffer, int i, int j)
 {
-	char	*map;
+	char	*string;
 
-	if (argc != 2)
-	{
-		ft_putstr_fd("Error\nPlease provide a map in format a map in format *.cub\n", 1);
+	string = (char *)malloc((ft_strlen(*map) + ft_strlen(buffer) + 1)
+			* sizeof(char));
+	if (!string)
 		return (1);
+	while ((*map)[i])
+	{
+		string[j] = (*map)[i];
+		i++;
+		j++;
 	}
-
-	map = (char *)malloc(sizeof(char));
-	if (!map)
-		exit(1);
-	map[0] = '\0';
-	read_file(&map, argv[1]);
-	get_paths_textures(map);
-	return 0;
+	i = 0;
+	while (buffer[i])
+	{
+		string[j] = buffer[i];
+		i++;
+		j++;
+	}
+	string[j] = '\0';
+	free(*map);
+	*map = string;
+	return (0);
 }
