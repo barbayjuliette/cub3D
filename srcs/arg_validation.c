@@ -6,14 +6,14 @@
 /*   By: jbarbay <jbarbay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 12:11:19 by jbarbay           #+#    #+#             */
-/*   Updated: 2024/04/08 16:40:54 by jbarbay          ###   ########.fr       */
+/*   Updated: 2024/04/08 17:00:51 by jbarbay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3D.h"
 
 
-char	*get_path_texture(t_game_data *data, char *map, char c, int *index)
+char	*get_path_texture(char *map, int *index)
 {
 	int		j;
 	int		len;
@@ -43,8 +43,6 @@ char	*get_path_texture(t_game_data *data, char *map, char c, int *index)
 	return (path);
 }
 
-// ./path_to_the_north_texture: length is 27
-
 t_game_data	*get_paths_textures(char *map)
 {
 	t_game_data	*data;
@@ -64,21 +62,21 @@ t_game_data	*get_paths_textures(char *map)
 	{
 		if (data->north_path && data->south_path && data->east_path && data->west_path && data->floor_color[0] != 266 && data->ceiling_color[0] != 266)
 			break ;
-		if (ft_strncmp(map + i, "NO", 2) && !data->north_path)
-		{
-			data->north_path = get_path_texture(data, map + 1, 'N', &i);
-			printf("Path found for north:\n%s\n", data->north_path);
-			break ;
-			// printf("MAP[i]:%c\n", map[i]);
-			// printf("I:%d\n", i);
-		}
-		// else if ()
-		// {
-		// 	/* code */
-		// }
-		
-		i++;
+		else if (!ft_strncmp(map + i, "NO", 2) && !data->north_path)
+			data->north_path = get_path_texture(map + 2, &i);
+		else if (!ft_strncmp(map + i, "SO", 2) && !data->south_path)
+			data->south_path = get_path_texture(map + 2, &i);
+		else if (!ft_strncmp(map + i, "EA", 2) && !data->east_path)
+			data->east_path = get_path_texture(map + 2, &i);
+		else if (!ft_strncmp(map + i, "WE", 2) && !data->west_path)
+			data->west_path = get_path_texture(map + 2, &i);
+		else
+			i++;
 	}
+	printf("Path found for north:\n%s\n", data->north_path);
+	printf("Path found for south:\n%s\n", data->south_path);
+	printf("Path found for east:\n%s\n", data->east_path);
+	printf("Path found for west:\n%s\n", data->west_path);
 	// printf("This is the map I got:\n%s", map);
 	return (data);
 
