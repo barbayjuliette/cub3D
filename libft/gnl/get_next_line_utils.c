@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbarbay <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: jbarbay <jbarbay@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 13:46:24 by jbarbay           #+#    #+#             */
-/*   Updated: 2023/10/17 13:46:27 by jbarbay          ###   ########.fr       */
+/*   Updated: 2024/04/08 22:09:17 by jbarbay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	ft_slen(char *string)
 	return (i);
 }
 
-void	ft_strjoin(char **s1, char *s2)
+void	ft_strjoin_gnl(char **s1, char *s2)
 {
 	char	*string;
 	int		i;
@@ -33,14 +33,14 @@ void	ft_strjoin(char **s1, char *s2)
 	string = (char *)malloc((ft_slen(*s1) + ft_slen(s2) + 1) * sizeof(char));
 	if (!string || !*s1 || !s2)
 		return ;
-	while ((*s1)[i]) 
+	while ((*s1)[i])
 	{
 		string[j] = (*s1)[i];
 		i++;
 		j++;
 	}
 	i = 0;
-	while (s2[i]) 
+	while (s2[i])
 	{
 		string[j] = s2[i];
 		i++;
@@ -51,7 +51,7 @@ void	ft_strjoin(char **s1, char *s2)
 	*s1 = string;
 }
 
-void	ft_substr(char **s, unsigned int start, size_t len, size_t i)
+void	ft_substr_gnl(char **s, unsigned int start, size_t len, size_t i)
 {
 	char		*substring;
 	size_t		j;
@@ -59,7 +59,7 @@ void	ft_substr(char **s, unsigned int start, size_t len, size_t i)
 	if (has_new_line(*s) == -1)
 	{
 		free(*s);
-		*s = ft_strdup("");
+		*s = ft_strdup_gnl("");
 		return ;
 	}
 	substring = (char *)malloc(sizeof(char) * (len + 1));
@@ -80,7 +80,7 @@ void	ft_substr(char **s, unsigned int start, size_t len, size_t i)
 	*s = substring;
 }
 
-char	*ft_strdup(char *s1)
+char	*ft_strdup_gnl(char *s1)
 {
 	int		len;
 	int		i;
@@ -100,7 +100,7 @@ char	*ft_strdup(char *s1)
 	return (copy);
 }
 
-void	*ft_calloc(size_t size)
+void	*ft_calloc_gnl(size_t size)
 {
 	char	*ptr;
 	size_t	i;

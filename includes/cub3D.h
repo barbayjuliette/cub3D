@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbarbay <jbarbay@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jbarbay <jbarbay@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 12:10:03 by jbarbay           #+#    #+#             */
-/*   Updated: 2024/04/08 18:17:19 by jbarbay          ###   ########.fr       */
+/*   Updated: 2024/04/08 22:10:12 by jbarbay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ typedef struct s_game_data
 
 // Map validation and reading
 
-void	read_file(char **map, char *filename);
 t_game_data	*get_paths_textures(char *map);
 int	ft_strjoin_2(char **map, char *buffer, int i, int j);
 void	error_file(char *buffer, char *map, char *message);

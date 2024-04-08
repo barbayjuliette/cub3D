@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbarbay <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: jbarbay <jbarbay@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 13:46:08 by jbarbay           #+#    #+#             */
-/*   Updated: 2023/10/17 13:46:11 by jbarbay          ###   ########.fr       */
+/*   Updated: 2024/04/08 22:09:07 by jbarbay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	*get_one_line(char *rem, int size)
 
 	if (size == 0)
 	{
-		line = ft_strdup(rem);
+		line = ft_strdup_gnl(rem);
 		return (line);
 	}
 	line = (char *)malloc(sizeof(char) * (size + 1));
@@ -57,7 +57,7 @@ int	read_file(char **rem, char **buffer, int fd)
 	if (bytes_read < 1)
 		return (bytes_read);
 	(*buffer)[bytes_read] = '\0';
-	ft_strjoin(rem, *buffer);
+	ft_strjoin_gnl(rem, *buffer);
 	return (bytes_read);
 }
 
@@ -86,7 +86,7 @@ char	*get_next_line(int fd)
 		return (NULL);
 	buffer = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!rem)
-		rem = ft_calloc(1);
+		rem = ft_calloc_gnl(1);
 	bytes_read = 1;
 	while (bytes_read > 0 && has_new_line(rem) == -1)
 	{
@@ -97,7 +97,7 @@ char	*get_next_line(int fd)
 	free(buffer);
 	index_line = has_new_line(rem);
 	line = get_one_line(rem, index_line + 1);
-	ft_substr(&rem, index_line + 1, ft_slen(rem) - index_line, 0);
+	ft_substr_gnl(&rem, index_line + 1, ft_slen(rem) - index_line, 0);
 	if (ft_slen(rem) == 0 && ft_slen(line) == 0)
 		return (free_static(&rem, &line));
 	return (line);
