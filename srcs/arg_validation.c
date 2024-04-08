@@ -6,7 +6,7 @@
 /*   By: jbarbay <jbarbay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 12:11:19 by jbarbay           #+#    #+#             */
-/*   Updated: 2024/04/08 17:54:59 by jbarbay          ###   ########.fr       */
+/*   Updated: 2024/04/08 18:02:30 by jbarbay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ void	get_colors(char *map, int *index, int *colors)
 		}
 		if (i < 2 && map[*index] != ',')
 			parsing_error("Wrong format for color");
+		if (num < 0 || num > 255)
+			parsing_error("R,G,B colors must be in range [0,255]");
 		colors[i] = num;
 		if (i == 2)
 			skip_spaces(map, index);
@@ -78,8 +80,12 @@ char	*get_path_texture(char *map, int *index)
 		(*index)++;
 		j++;
 	}
-	(*index)++;
 	path[j] = '\0';
+	(*index)++;
+	skip_spaces(map, index);
+	if (map[*index] != '\n')
+		parsing_error("Texture argument must be of format: XX ./path_to_the_xx_texture");
+	printf("map[i]: %c\n", map[*index]);
 	return (path);
 }
 
