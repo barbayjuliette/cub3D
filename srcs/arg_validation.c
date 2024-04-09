@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   arg_validation.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbarbay <jbarbay@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jbarbay <jbarbay@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 12:11:19 by jbarbay           #+#    #+#             */
-/*   Updated: 2024/04/08 18:17:44 by jbarbay          ###   ########.fr       */
+/*   Updated: 2024/04/09 13:13:23 by jbarbay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,35 +26,35 @@ void	skip_spaces(char *map, int	*index)
 		(*index)++;
 }
 
-void	get_colors(char *map, int *index, int *colors)
-{
-	int	num;
-	int	i;
+// void	get_colors(char *map, int *index, int *colors)
+// {
+// 	int	num;
+// 	int	i;
 
-	i = 0;
-	skip_spaces(map, index);
-	while (i < 3)
-	{
-		num = 0;
-		while (ft_isdigit(map[*index]))
-		{
-			num = num * 10 + map[*index] - '0';
-			(*index)++;
-		}
-		if (i < 2 && map[*index] != ',')
-			parsing_error("Wrong format for color");
-		if (num < 0 || num > 255)
-			parsing_error("R,G,B colors must be in range [0,255]");
-		colors[i] = num;
-		if (i == 2)
-			skip_spaces(map, index);
-		else
-			(*index)++;
-		i++;
-	}
-	if (map[*index] != '\n')
-		parsing_error("Wrong format for color");
-}
+// 	i = 0;
+// 	skip_spaces(map, index);
+// 	while (i < 3)
+// 	{
+// 		num = 0;
+// 		while (ft_isdigit(map[*index]))
+// 		{
+// 			num = num * 10 + map[*index] - '0';
+// 			(*index)++;
+// 		}
+// 		if (i < 2 && map[*index] != ',')
+// 			parsing_error("Wrong format for color");
+// 		if (num < 0 || num > 255)
+// 			parsing_error("R,G,B colors must be in range [0,255]");
+// 		colors[i] = num;
+// 		if (i == 2)
+// 			skip_spaces(map, index);
+// 		else
+// 			(*index)++;
+// 		i++;
+// 	}
+// 	if (map[*index] != '\n')
+// 		parsing_error("Wrong format for color");
+// }
 
 char	*get_path_texture(char *map, int *index)
 {
