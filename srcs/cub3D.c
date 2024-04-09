@@ -6,11 +6,24 @@
 /*   By: jbarbay <jbarbay@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 12:08:26 by jbarbay           #+#    #+#             */
-/*   Updated: 2024/04/08 22:43:55 by jbarbay          ###   ########.fr       */
+/*   Updated: 2024/04/09 11:45:05 by jbarbay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3D.h"
+
+void	free_array(char *array)
+{
+	int	i;
+
+	i = 0;
+	while (array[i])
+	{
+		free(array[i]);
+		i++;
+	}
+	free(array);
+}
 
 int	open_file(char *filename)
 {
@@ -60,6 +73,15 @@ int	array_len(char **arr)
 	return (i);
 }
 
+void	check_args(int argc)
+{
+	if (argc != 2)
+	{
+		ft_putstr_fd("Error\nPlease provide a map in format a map in format *.cub\n", 1);
+		exit(1);
+	}
+}
+
 int main(int argc, char *argv[])
 {
 	int		fd;
@@ -68,11 +90,7 @@ int main(int argc, char *argv[])
 	t_game_data	*data;
 
 	data = initialize_data_args();
-	if (argc != 2)
-	{
-		ft_putstr_fd("Error\nPlease provide a map in format a map in format *.cub\n", 1);
-		return (1);
-	}
+	check_args(argc);
 	fd = open_file(argv[1]);
 	line = get_next_line(fd);
 	while (line && all_args_not_found(data))
@@ -82,7 +100,8 @@ int main(int argc, char *argv[])
 		{
 			ft_putendl_fd("Error", 1);
 			ft_putendl_fd("Please provide all arguments before the map", 1);
-			free(split_line); // Free the whole array one by one!!!!
+			free_array(split_line);
+			free(line);
 			close(fd);
 			return (1);
 		}
@@ -97,58 +116,58 @@ int main(int argc, char *argv[])
 			ft_putendl_fd("Error", 1);
 			ft_putendl_fd("No space", 1);
 			ft_putendl_fd("Please provide arguments as follow: NO ./path_to_the_north_texture", 1);
-			free(split_line); // Free the whole array one by one!!!!
+			free_array(split_line);
+			free(line);
 			close(fd);
 			return (1);
 		}
 		else if (array_len(split_line) != 2)
 		{
 			ft_putendl_fd("Error", 1);
-			printf("Length: %i\n", array_len(split_line));
-			printf("split_line[0]: %s", split_line[0]);
+			// printf("Length: %i\n", array_len(split_line));
+			// printf("split_line[0]: %s", split_line[0]);
 			ft_putendl_fd("Please provide arguments as follow: NO ./path_to_the_north_texture", 1);
-			free(split_line); // Free the whole array one by one!!!!
+			free_array(split_line);
+			free(line);
 			close(fd);
 			return (1);
 		}
 		else if (!ft_strncmp(split_line[0], "NO", 2))
 		{
 			data->north_path = split_line[1];
-			// free(split_line);
-			// free(split_line[0]);
+			free(split_line);
+			free(split_line[0]);
 		}
 		else if (!ft_strncmp(split_line[0], "SO", 2))
 		{
 			data->south_path = split_line[1];
-			// free(split_line);
-			// free(split_line[0]);
+			free(split_line);
+			free(split_line[0]);
 		}
 		else if (!ft_strncmp(split_line[0], "EA", 2))
 		{
 			data->east_path = split_line[1];
-			// free(split_line);
-			// free(split_line[0]);
+			free(split_line);
+			free(split_line[0]);
 		}
 		else if (!ft_strncmp(split_line[0], "WE", 2))
 		{
 			data->west_path = split_line[1];
-			// free(split_line);
-			// free(split_line[0]);
+			free(split_line);
+			free(split_line[0]);
 		}
 		else
 		{
-			free(split_line);
-			free(split_line[0]);
-			free(split_line[1]);
+			free_array(split_line);
 		}
 		free(line);
 		line = get_next_line(fd);
 	}
 	free(line);
-	printf("Path found for north:\n%s\n", data->north_path);
-	printf("Path found for south:\n%s\n", data->south_path);
-	printf("Path found for east:\n%s\n", data->east_path);
-	printf("Path found for west:\n%s\n", data->west_path);
+	printf("Path found for north: %s\n", data->north_path);
+	printf("Path found for south: %s\n", data->south_path);
+	printf("Path found for east: %s\n", data->east_path);
+	printf("Path found for west: %s\n", data->west_path);
 	close(fd);
 	return 0;
 }
