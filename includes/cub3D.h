@@ -6,7 +6,7 @@
 /*   By: jbarbay <jbarbay@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 12:10:03 by jbarbay           #+#    #+#             */
-/*   Updated: 2024/04/09 13:46:02 by jbarbay          ###   ########.fr       */
+/*   Updated: 2024/04/09 20:38:56 by jbarbay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct s_game_data
 	int		floor_color[3];
 	int		ceiling_color[3];
 	char	**map;
+	int		fd;
 
 } t_game_data;
 
@@ -44,6 +45,9 @@ void	free_array(char **array);
 int		array_len(char **arr);
 void	check_args(int argc);
 int		open_file(char *filename);
+
+void	error_parsing(char *message, char **array, char *line, t_game_data *data);
+t_game_data	*initialize_data_args(int fd);
 
 
 #endif
