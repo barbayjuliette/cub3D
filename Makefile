@@ -6,14 +6,15 @@
 #    By: jbarbay <jbarbay@student.42singapore.sg    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/27 15:11:22 by jbarbay           #+#    #+#              #
-#    Updated: 2024/04/09 13:13:09 by jbarbay          ###   ########.fr        #
+#    Updated: 2024/04/09 13:45:18 by jbarbay          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRCS =  srcs/cub3D.c \
 		srcs/validation_helpers.c \
 		srcs/read_map.c \
-
+		srcs/colors_validation.c \
+		srcs/utils.c
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
