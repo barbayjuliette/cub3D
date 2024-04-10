@@ -6,7 +6,7 @@
 /*   By: jbarbay <jbarbay@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 12:08:26 by jbarbay           #+#    #+#             */
-/*   Updated: 2024/04/10 15:08:43 by jbarbay          ###   ########.fr       */
+/*   Updated: 2024/04/10 22:24:18 by jbarbay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,63 @@ void	get_textures_and_colors(int fd, t_game_data *data)
 	free(line);
 }
 
+char	**create_new_map(char **old_map, int total_rows, char *line)
+{
+	char	**new_map;
+	int		i;
+
+	i = 0;
+	new_map = (char **)malloc(sizeof(char *) * (total_rows + 1));
+	if (!new_map)
+		return (NULL); // MALLOC ERROR
+	while (old_map[i])
+	{
+		new_map[i] = old_map[i];
+		i++;
+	}
+	new_map[i] = line;
+	new_map[i + 1] = NULL;
+	free(old_map);
+	return (new_map);
+}
+
+void	get_map(int fd, t_game_data *data)
+{
+	int	total_rows;
+	char	**map;
+	char	*line;
+
+	total_rows = 0;
+	line = get_next_line(fd);
+	map = (char **)malloc(sizeof(char *) * (total_rows + 1));
+
+	if (!map)
+		return ; // MALLOC ERROR
+	map[0] = NULL;
+
+	while (line)
+	{
+		total_rows++;
+		map = create_new_map(map, total_rows, line);
+		line = get_next_line(fd);
+	}
+	if (total_rows == 0)
+		return ; // + ERROR No map found
+	data->map = map;
+}
+
+void	print_map(char **map)
+{
+	int	i;
+
+	i = 0;
+	while (map[i])
+	{
+		ft_putstr_fd(map[i], 1);
+		i++;
+	}
+}
+
 int	main(int argc, char *argv[])
 {
 	int			fd;
@@ -74,6 +131,7 @@ int	main(int argc, char *argv[])
 	data = initialize_data_args(fd);
 	check_args(argc);
 	get_textures_and_colors(fd, data);
+	get_map(fd, data);
 	close(fd);
 
 	printf("Path found for north: %s\n", data->north_path);
@@ -82,5 +140,6 @@ int	main(int argc, char *argv[])
 	printf("Path found for west: %s\n", data->west_path);
 	printf("Colors floor: [%i, %i, %i]\n", data->floor_color[0], data->floor_color[1], data->floor_color[2]);
 	printf("Colors ceiling: [%i, %i, %i]\n", data->ceiling_color[0], data->ceiling_color[1], data->ceiling_color[2]);
+	print_map(data->map);
 	return (0);
 }
