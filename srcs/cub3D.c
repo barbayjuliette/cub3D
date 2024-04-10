@@ -6,27 +6,11 @@
 /*   By: jbarbay <jbarbay@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 12:08:26 by jbarbay           #+#    #+#             */
-/*   Updated: 2024/04/09 20:49:15 by jbarbay          ###   ########.fr       */
+/*   Updated: 2024/04/10 15:08:43 by jbarbay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3D.h"
-
-t_game_data	*initialize_data_args(int fd)
-{
-	t_game_data	*data;
-
-	data = (t_game_data *)malloc(sizeof(t_game_data));
-	data->north_path = NULL;
-	data->south_path = NULL;
-	data->west_path = NULL;
-	data->east_path = NULL;
-	data->map = NULL;
-	data->ceiling_color[0] = 266;
-	data->floor_color[0] = 266;
-	data->fd = fd;
-	return (data);
-}
 
 int	all_args_not_found(t_game_data *data)
 {
@@ -35,82 +19,63 @@ int	all_args_not_found(t_game_data *data)
 	return (1);
 }
 
-void	free_data(t_game_data *data)
+char	*prepare_next_iteration(char *line, char **split_line, int fd)
 {
-	if (data->north_path)
-		free(data->north_path);
-	if (data->south_path)
-		free(data->south_path);
-	if (data->east_path)
-		free(data->east_path);
-	if (data->west_path)
-		free(data->west_path);
-	// ADD to FREE the map
+	free_array(split_line);
+	free(line);
+	return (get_next_line(fd));
 }
 
-void	error_parsing(char *message, char **array, char *line, t_game_data *data)
+void	check_errors_argument(char **split_line, char *line, t_game_data *data)
 {
-	if (message)
+	if (!ft_strncmp(split_line[0], "1", 1)) // We found the map, but don't have all arguments yet
+		error_parsing("Please provide all arguments before the map", split_line, line, data);
+	else if (array_len(split_line) == 1 && split_line[0][0] != '\n') // No space between arguments
+		error_parsing("No space between arguments\nPlease provide arguments as follow: NO ./path_to_the_north_texture", split_line, line, data);
+	else if (array_len(split_line) != 2 && split_line[0][0] != '\n') // Too many args on one line
+		error_parsing("Please provide arguments as follow: \nNO ./path_to_the_north_texture \nF 220,100,0", split_line, line, data);
+}
+
+void	get_textures_and_colors(int fd, t_game_data *data)
+{
+	char		*line;
+	char		**split_line;
+
+	line = get_next_line(fd);
+	while (line && all_args_not_found(data))
 	{
-		ft_putendl_fd("Error", 1);
-		ft_putendl_fd(message, 1);
+		split_line = ft_split(line, ' ');
+		check_errors_argument(split_line, line, data);
+		if (!ft_strncmp(split_line[0], "NO", 3))
+			data->north_path = ft_substr(split_line[1], 0, ft_strlen(split_line[1]) - 1);
+		else if (!ft_strncmp(split_line[0], "SO", 3))
+			data->south_path = ft_substr(split_line[1], 0, ft_strlen(split_line[1]) - 1);
+		else if (!ft_strncmp(split_line[0], "EA", 3))
+			data->east_path = ft_substr(split_line[1], 0, ft_strlen(split_line[1]) - 1);
+		else if (!ft_strncmp(split_line[0], "WE", 3))
+			data->west_path = ft_substr(split_line[1], 0, ft_strlen(split_line[1]) - 1);
+		else if (!ft_strncmp(split_line[0], "C", 2))
+			get_colors(data->ceiling_color, split_line, line, data);
+		else if (!ft_strncmp(split_line[0], "F", 2))
+			get_colors(data->floor_color, split_line, line, data);
+		else if (split_line[0][0] != '\n')// If new line, ignore, just go the next iteration
+			error_parsing("Parsing error. Please only provide requested arguments", split_line, line, data);
+		line = prepare_next_iteration(line, split_line, fd);
 	}
-	free_array(array);
 	free(line);
-	close(data->fd);
-	free_data(data);
-	exit(1);
 }
 
 int	main(int argc, char *argv[])
 {
 	int			fd;
-	char		*line;
-	char		**split_line;
 	t_game_data	*data;
 
 	fd = open_file(argv[1]);
 	data = initialize_data_args(fd);
 	check_args(argc);
-	line = get_next_line(fd);
-	while (line && all_args_not_found(data))
-	{
-		split_line = ft_split(line, ' ');
-		if (!ft_strncmp(split_line[0], "1", 1)) // We found the map, but don't have all arguments yet
-			error_parsing("Please provide all arguments before the map", split_line, line, data);
-		else if (array_len(split_line) == 1 && split_line[0][0] == '\n') // Empty line
-		{
-			free(line);
-			line = get_next_line(fd);
-			continue ;
-		}
-		else if (array_len(split_line) == 1) // No space between arguments
-			error_parsing("No space between arguments\nPlease provide arguments as follow: NO ./path_to_the_north_texture", split_line, line, data);
-		else if (array_len(split_line) != 2) // Too many args on one line
-			error_parsing("Please provide arguments as follow: \nNO ./path_to_the_north_texture \nF 220,100,0", split_line, line, data);
-		else if (!ft_strncmp(split_line[0], "NO", 2))
-			data->north_path = ft_substr(split_line[1], 0, ft_strlen(split_line[1]) - 1);
-		else if (!ft_strncmp(split_line[0], "SO", 2))
-			data->south_path = ft_substr(split_line[1], 0, ft_strlen(split_line[1]) - 1);
-		else if (!ft_strncmp(split_line[0], "EA", 2))
-			data->east_path = ft_substr(split_line[1], 0, ft_strlen(split_line[1]) - 1);
-		else if (!ft_strncmp(split_line[0], "WE", 2))
-			data->west_path = ft_substr(split_line[1], 0, ft_strlen(split_line[1]) - 1);
-		else if (!ft_strncmp(split_line[0], "C", 1))
-			get_colors(data->ceiling_color, split_line[1]);
-		else if (!ft_strncmp(split_line[0], "F", 1))
-		{
-			if (get_colors(data->floor_color, split_line[1]))
-				error_parsing(NULL, split_line, line, data);
-		}
-		else
-			error_parsing("Parsing error. Please only provide requested arguments", split_line, line, data);
-		free_array(split_line);
-		free(line);
-		line = get_next_line(fd);
-	}
-	free(line);
+	get_textures_and_colors(fd, data);
 	close(fd);
+
 	printf("Path found for north: %s\n", data->north_path);
 	printf("Path found for south: %s\n", data->south_path);
 	printf("Path found for east: %s\n", data->east_path);

@@ -3,38 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   validation_helpers.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbarbay <jbarbay@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jbarbay <jbarbay@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 14:32:43 by jbarbay           #+#    #+#             */
-/*   Updated: 2024/04/08 14:33:29 by jbarbay          ###   ########.fr       */
+/*   Updated: 2024/04/10 15:07:12 by jbarbay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3D.h"
 
-int	ft_strjoin_2(char **map, char *buffer, int i, int j)
+t_game_data	*initialize_data_args(int fd)
 {
-	char	*string;
+	t_game_data	*data;
 
-	string = (char *)malloc((ft_strlen(*map) + ft_strlen(buffer) + 1)
-			* sizeof(char));
-	if (!string)
-		return (1);
-	while ((*map)[i])
+	data = (t_game_data *)malloc(sizeof(t_game_data));
+	data->north_path = NULL;
+	data->south_path = NULL;
+	data->west_path = NULL;
+	data->east_path = NULL;
+	data->map = NULL;
+	data->ceiling_color[0] = 266;
+	data->floor_color[0] = 266;
+	data->fd = fd;
+	return (data);
+}
+
+void	error_parsing(char *message, char **array, char *line, t_game_data *data)
+{
+	if (message)
 	{
-		string[j] = (*map)[i];
-		i++;
-		j++;
+		ft_putendl_fd("Error", 1);
+		ft_putendl_fd(message, 1);
 	}
-	i = 0;
-	while (buffer[i])
-	{
-		string[j] = buffer[i];
-		i++;
-		j++;
-	}
-	string[j] = '\0';
-	free(*map);
-	*map = string;
-	return (0);
+	free_array(array);
+	free(line);
+	close(data->fd);
+	free_data(data);
+	exit(1);
 }
