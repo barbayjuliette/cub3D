@@ -6,7 +6,7 @@
 /*   By: jbarbay <jbarbay@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 12:08:26 by jbarbay           #+#    #+#             */
-/*   Updated: 2024/04/10 22:24:18 by jbarbay          ###   ########.fr       */
+/*   Updated: 2024/04/10 23:02:51 by jbarbay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,16 +122,57 @@ void	print_map(char **map)
 	}
 }
 
+void	validate_map(t_game_data *data)
+{
+	int	i;
+	int	j;
+	int	pos;
+
+	i = 0;
+	pos = 0;
+	while (data->map[i])
+	{
+		j = 0;
+		while (data->map[i][j])
+		{
+			if (data->map[i][j] == ' ')
+				data->map[i][j] = '1';
+			if (!ft_strrchr("01NSWE\n", data->map[i][j]))
+				error_parsing("Map must only contain characters 01NSWE", NULL, NULL, data);
+			if (data->map[i][j] == 'N' || data->map[i][j] == 'S' || data->map[i][j] == 'W' || data->map[i][j] == 'E')
+				pos++;
+			if (pos > 1)
+				error_parsing("Please position only one starting player", NULL, NULL, data);
+			j++;
+		}
+		i++;
+	}
+}
+
+void	check_cub_file(char *filename)
+{
+	int	length;
+	int	result;
+
+	length = ft_strlen(filename);
+	filename += (length - 4);
+	result = ft_strncmp(filename, ".cub", 4);
+	if (result != 0)
+		error_parsing("Please provide all the arguments in a .ber file", NULL, NULL, NULL);
+}
+
 int	main(int argc, char *argv[])
 {
 	int			fd;
 	t_game_data	*data;
 
+	check_cub_file(argv[1]);
 	fd = open_file(argv[1]);
 	data = initialize_data_args(fd);
 	check_args(argc);
 	get_textures_and_colors(fd, data);
 	get_map(fd, data);
+	validate_map(data);
 	close(fd);
 
 	printf("Path found for north: %s\n", data->north_path);
