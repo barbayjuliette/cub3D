@@ -3,18 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jbarbay <jbarbay@student.42.fr>            +#+  +:+       +#+         #
+#    By: jbarbay <jbarbay@student.42singapore.sg    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/27 15:11:22 by jbarbay           #+#    #+#              #
-#    Updated: 2024/04/08 15:40:37 by jbarbay          ###   ########.fr        #
+#    Updated: 2024/04/09 20:41:02 by jbarbay          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS = srcs/arg_validation.c \
-		srcs/cub3D.c \
+SRCS =  srcs/cub3D.c \
 		srcs/validation_helpers.c \
-		srcs/read_map.c \
-		
+		srcs/colors_validation.c \
+		srcs/utils.c
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
@@ -25,14 +24,21 @@ LIBFT = ./libft
 LFLAGS = -L${LIBFT} -lft
 all: ${NAME}
 
+$(NAME):
+		@make all bonus -C libft
+		$(CC) $(CFLAGS) $(SRCS) -L./libft -lft -o ${NAME}
+
 %.o: %.c
-	$(CC) -I/usr/include -Imlx_linux -O3 -c $< -o $@
+	${CC} $(CFLAGS) -c $<
 
-$(NAME): $(OBJS) runlibft
-	$(CC) $(OBJS) -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz -L./libft -lft -o $(NAME)
+# %.o: %.c
+# 	$(CC) -I/usr/include -Imlx_linux -O3 -c $< -o $@
 
-runlibft:
-	@make all -C libft
+# $(NAME): $(OBJS) runlibft
+# 	$(CC) $(OBJS) -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz -L./libft -lft -o $(NAME)
+
+# runlibft:
+# 	@make all -C libft
 
 clean:
 		${RM} ${OBJS}
