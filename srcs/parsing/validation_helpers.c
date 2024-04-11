@@ -6,11 +6,11 @@
 /*   By: jbarbay <jbarbay@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 14:32:43 by jbarbay           #+#    #+#             */
-/*   Updated: 2024/04/10 22:44:59 by jbarbay          ###   ########.fr       */
+/*   Updated: 2024/04/11 18:11:17 by jbarbay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3D.h"
+#include "../../includes/cub3D.h"
 
 t_game_data	*initialize_data_args(int fd)
 {
@@ -47,4 +47,16 @@ void	error_parsing(char *message, char **array, char *line, t_game_data *data)
 			free_array(data->map);
 	}
 	exit(1);
+}
+
+void	check_cub_file(char *filename)
+{
+	int	length;
+	int	result;
+
+	length = ft_strlen(filename);
+	filename += (length - 4);
+	result = ft_strncmp(filename, ".cub", 4);
+	if (result != 0)
+		error_parsing("Please provide all the arguments in a .ber file", NULL, NULL, NULL);
 }
