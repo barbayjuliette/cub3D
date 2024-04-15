@@ -6,7 +6,7 @@
 #    By: jbarbay <jbarbay@student.42singapore.sg    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/27 15:11:22 by jbarbay           #+#    #+#              #
-#    Updated: 2024/04/11 18:10:03 by jbarbay          ###   ########.fr        #
+#    Updated: 2024/04/15 18:03:35 by jbarbay          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,8 @@ SRCS =  srcs/cub3D.c \
 		srcs/parsing/colors_validation.c \
 		srcs/parsing/map_validation.c \
 		srcs/parsing/get_arguments.c \
-		srcs/parsing/utils.c
+		srcs/parsing/utils.c \
+		srcs/parsing/quoted_path.c
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror

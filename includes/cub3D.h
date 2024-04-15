@@ -6,7 +6,7 @@
 /*   By: jbarbay <jbarbay@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 12:10:03 by jbarbay           #+#    #+#             */
-/*   Updated: 2024/04/11 18:22:35 by jbarbay          ###   ########.fr       */
+/*   Updated: 2024/04/15 18:01:53 by jbarbay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int		array_len(char **arr);
 void	check_args(int argc);
 int		open_file(char *filename);
 void	print_map(char **map);
-
+char	*ft_strjoin_free(char *s1, char const *s2);
 void	free_data(t_game_data *data);
 
 void	error_parsing(char *message, char **array, char *line, t_game_data *data);
@@ -63,5 +63,7 @@ void	check_walls(int i, int j, int total_rows, t_game_data *data);
 void	check_cub_file(char *filename);
 char	**create_new_map(char **old_map, int total_rows, char *line, t_game_data *data);
 
+int	is_quote(char **args);
+char	**get_quoted_path(char *line, char **args);
 
 #endif

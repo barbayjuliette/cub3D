@@ -6,7 +6,7 @@
 /*   By: jbarbay <jbarbay@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:43:46 by jbarbay           #+#    #+#             */
-/*   Updated: 2024/04/15 17:17:01 by jbarbay          ###   ########.fr       */
+/*   Updated: 2024/04/15 17:59:49 by jbarbay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,40 @@ void	free_array(char **array)
 int	array_len(char **arr)
 {
 	int		i;
-	char	**array;
 
 	i = 0;
-	array = arr;
-	while (array[i])
+	while (arr[i])
 		i++;
 	return (i);
+}
+
+char	*ft_strjoin_free(char *s1, char const *s2)
+{
+	char	*string;
+	int		i;
+	int		j;
+
+	i = 0;
+	j = 0;
+	string = (char *)malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
+	if (!string)
+		return (NULL);
+	while (s1[i])
+	{
+		string[j] = s1[i];
+		i++;
+		j++;
+	}
+	i = 0;
+	while (s2[i])
+	{
+		string[j] = s2[i];
+		i++;
+		j++;
+	}
+	string[j] = '\0';
+	free(s1);
+	return (string);
 }
 
 void	check_args(int argc)
