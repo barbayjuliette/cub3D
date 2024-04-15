@@ -6,7 +6,7 @@
 /*   By: jbarbay <jbarbay@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:43:46 by jbarbay           #+#    #+#             */
-/*   Updated: 2024/04/11 18:11:11 by jbarbay          ###   ########.fr       */
+/*   Updated: 2024/04/15 17:17:01 by jbarbay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,12 @@ void	free_array(char **array)
 
 int	array_len(char **arr)
 {
-	int	i;
+	int		i;
+	char	**array;
 
 	i = 0;
-	while (arr[i])
+	array = arr;
+	while (array[i])
 		i++;
 	return (i);
 }

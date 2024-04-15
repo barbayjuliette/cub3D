@@ -6,7 +6,7 @@
 /*   By: jbarbay <jbarbay@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 17:40:17 by jbarbay           #+#    #+#             */
-/*   Updated: 2024/04/11 18:24:34 by jbarbay          ###   ########.fr       */
+/*   Updated: 2024/04/15 17:07:08 by jbarbay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,11 @@
 void	check_walls(int i, int j, int total_rows, t_game_data *data)
 {
 	if ((i == 0 || i == total_rows - 1) && data->map[i][j] != '1')
-			error_parsing("Map must be enclosed by walls 1", NULL, NULL, data);
+		error_parsing("Map must be enclosed by walls 1", NULL, NULL, data);
+	else if (i > 0 && !(data->map[i - 1][j]) && data->map[i][j] != '1')
+		error_parsing("Map must be enclosed by walls 11", NULL, NULL, data);
+	else if (data->map[i + 1] && !(data->map[i + 1][j]) && data->map[i][j] != '1')
+		error_parsing("Map must be enclosed by walls 22", NULL, NULL, data);
 	else if (j == 0 && data->map[i][j] != '1')
 		error_parsing("Map must be enclosed by walls 2", NULL, NULL, data);
 	else if (data->map[i][j + 1] && data->map[i][j + 1] == '\n' && data->map[i][j] != '1')
@@ -87,6 +91,8 @@ int	get_map(int fd, t_game_data *data)
 	map[0] = NULL;
 	while (line)
 	{
+		if (ft_strncmp(line, "\n", 2) == 0)
+			break ;
 		total_rows++;
 		map = create_new_map(map, total_rows, line, data);
 		line = get_next_line(fd);
