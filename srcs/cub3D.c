@@ -6,7 +6,7 @@
 /*   By: jbarbay <jbarbay@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 12:08:26 by jbarbay           #+#    #+#             */
-/*   Updated: 2024/04/11 18:24:59 by jbarbay          ###   ########.fr       */
+/*   Updated: 2024/04/17 13:24:04 by jbarbay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ int	main(int argc, char *argv[])
 	printf("Path found for west: %s\n", data->west_path);
 	printf("Colors floor: [%i, %i, %i]\n", data->floor_color[0], data->floor_color[1], data->floor_color[2]);
 	printf("Colors ceiling: [%i, %i, %i]\n", data->ceiling_color[0], data->ceiling_color[1], data->ceiling_color[2]);
+	printf("Player direction: %c\n", data->player_dir);
+	printf("Player position: [%i, %i]\n", data->player_pos[0], data->player_pos[1]);
 	print_map(data->map);
 	return (0);
 }

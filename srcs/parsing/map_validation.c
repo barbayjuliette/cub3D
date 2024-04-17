@@ -6,7 +6,7 @@
 /*   By: jbarbay <jbarbay@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 17:40:17 by jbarbay           #+#    #+#             */
-/*   Updated: 2024/04/15 17:07:08 by jbarbay          ###   ########.fr       */
+/*   Updated: 2024/04/17 13:26:17 by jbarbay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,16 @@ void	check_walls(int i, int j, int total_rows, t_game_data *data)
 		error_parsing("Map must be enclosed by walls 4", NULL, NULL, data);
 }
 
+void	set_start_position(int	*pos, t_game_data *data, int i, int j)
+{
+	if (*pos > 0)
+		error_parsing("Position only one starting player", NULL, NULL, data);
+	data->player_dir = data->map[i][j];
+	data->player_pos[0] = i;
+	data->player_pos[1] = j;
+	(*pos)++;
+}
+
 void	validate_map(t_game_data *data, int total_rows)
 {
 	int	i;
@@ -46,14 +56,15 @@ void	validate_map(t_game_data *data, int total_rows)
 			check_walls(i, j, total_rows, data);
 			if (!ft_strrchr("01NSWE\n", data->map[i][j]))
 				error_parsing("Map must only contain characters 01NSWE", NULL, NULL, data);
-			if (data->map[i][j] == 'N' || data->map[i][j] == 'S' || data->map[i][j] == 'W' || data->map[i][j] == 'E')
-				pos++;
-			if (pos > 1)
-				error_parsing("Position only one starting player", NULL, NULL, data);
+			if (data->map[i][j] == 'N' || data->map[i][j] == 'S'
+			|| data->map[i][j] == 'W' || data->map[i][j] == 'E')
+				set_start_position(&pos, data, i, j);
 			j++;
 		}
 		i++;
 	}
+	if (pos == 0)
+		error_parsing("You must position the starting player", NULL, NULL, data);
 }
 
 char	**create_new_map(char **old_map, int total_rows, char *line, t_game_data *data)
@@ -79,7 +90,7 @@ char	**create_new_map(char **old_map, int total_rows, char *line, t_game_data *d
 
 int	get_map(int fd, t_game_data *data)
 {
-	int	total_rows;
+	int		total_rows;
 	char	**map;
 	char	*line;
 
