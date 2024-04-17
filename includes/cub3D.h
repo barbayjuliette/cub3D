@@ -6,7 +6,7 @@
 /*   By: jbarbay <jbarbay@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 12:10:03 by jbarbay           #+#    #+#             */
-/*   Updated: 2024/04/15 18:01:53 by jbarbay          ###   ########.fr       */
+/*   Updated: 2024/04/17 13:22:14 by jbarbay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,38 +32,53 @@ typedef struct s_game_data
 	int		ceiling_color[3];
 	char	**map;
 	int		fd;
+	int		player_pos[2];
+	char	player_dir;
 
 } t_game_data;
 
 // Map validation and reading
 
+// Check values colors
 int		parsing_error_colors(char *str);
 int		check_color_format(char c, int i, int num);
 void	get_colors(int *colors, char **args, char *line, t_game_data *data);
 
-void	free_array(char **array);
-int		array_len(char **arr);
-void	check_args(int argc);
-int		open_file(char *filename);
-void	print_map(char **map);
-char	*ft_strjoin_free(char *s1, char const *s2);
-void	free_data(t_game_data *data);
+// Map validation
+void	check_walls(int i, int j, int total_rows, t_game_data *data);
+void	set_start_position(int	*pos, t_game_data *data, int i, int j);
+void	validate_map(t_game_data *data, int total_rows);
+char	**create_new_map(char **old_map, int total_rows, char *line, t_game_data *data);
+int		get_map(int fd, t_game_data *data);
 
-void	error_parsing(char *message, char **array, char *line, t_game_data *data);
-t_game_data	*initialize_data_args(int fd);
-
+// Argument parsing
 int		all_args_not_found(t_game_data *data);
 char	*prepare_next_iteration(char *line, char **args, int fd);
 void	check_errors_argument(char **args, char *line, t_game_data *data);
+void	check_identifier(t_game_data *data, char **args, char *line);
 void	get_textures_and_colors(int fd, t_game_data *data);
 
-int		get_map(int fd, t_game_data *data);
-void	validate_map(t_game_data *data, int total_rows);
-void	check_walls(int i, int j, int total_rows, t_game_data *data);
-void	check_cub_file(char *filename);
-char	**create_new_map(char **old_map, int total_rows, char *line, t_game_data *data);
-
-int	is_quote(char **args);
+// Get quoted path
+int		is_quote(char **args);
 char	**get_quoted_path(char *line, char **args);
+
+// General utils
+void	free_array(char **array);
+int		array_len(char **arr);
+char	*ft_strjoin_free(char *s1, char const *s2);
+void	check_args(int argc);
+void	print_map(char **map);
+void	free_data(t_game_data *data);
+int		open_file(char *filename);
+
+// Validation helpers
+t_game_data	*initialize_data_args(int fd);
+void	error_parsing(char *message, char **array, char *line, t_game_data *data);
+void	check_cub_file(char *filename);
+
+
+
+
+
 
 #endif
