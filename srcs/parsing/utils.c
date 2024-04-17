@@ -6,11 +6,11 @@
 /*   By: jbarbay <jbarbay@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:43:46 by jbarbay           #+#    #+#             */
-/*   Updated: 2024/04/10 15:06:50 by jbarbay          ###   ########.fr       */
+/*   Updated: 2024/04/15 17:59:49 by jbarbay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3D.h"
+#include "../../includes/cub3D.h"
 
 void	free_array(char **array)
 {
@@ -27,12 +27,41 @@ void	free_array(char **array)
 
 int	array_len(char **arr)
 {
-	int	i;
+	int		i;
 
 	i = 0;
 	while (arr[i])
 		i++;
 	return (i);
+}
+
+char	*ft_strjoin_free(char *s1, char const *s2)
+{
+	char	*string;
+	int		i;
+	int		j;
+
+	i = 0;
+	j = 0;
+	string = (char *)malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
+	if (!string)
+		return (NULL);
+	while (s1[i])
+	{
+		string[j] = s1[i];
+		i++;
+		j++;
+	}
+	i = 0;
+	while (s2[i])
+	{
+		string[j] = s2[i];
+		i++;
+		j++;
+	}
+	string[j] = '\0';
+	free(s1);
+	return (string);
 }
 
 void	check_args(int argc)
@@ -55,6 +84,18 @@ void	free_data(t_game_data *data)
 	if (data->west_path)
 		free(data->west_path);
 	// ADD to FREE the map
+}
+
+void	print_map(char **map)
+{
+	int	i;
+
+	i = 0;
+	while (map[i])
+	{
+		ft_putendl_fd(map[i], 1);
+		i++;
+	}
 }
 
 int	open_file(char *filename)

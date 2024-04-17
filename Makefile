@@ -6,14 +6,17 @@
 #    By: jbarbay <jbarbay@student.42singapore.sg    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/27 15:11:22 by jbarbay           #+#    #+#              #
-#    Updated: 2024/04/09 20:41:02 by jbarbay          ###   ########.fr        #
+#    Updated: 2024/04/15 18:03:35 by jbarbay          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRCS =  srcs/cub3D.c \
-		srcs/validation_helpers.c \
-		srcs/colors_validation.c \
-		srcs/utils.c
+		srcs/parsing/validation_helpers.c \
+		srcs/parsing/colors_validation.c \
+		srcs/parsing/map_validation.c \
+		srcs/parsing/get_arguments.c \
+		srcs/parsing/utils.c \
+		srcs/parsing/quoted_path.c
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
@@ -26,10 +29,10 @@ all: ${NAME}
 
 $(NAME):
 		@make all bonus -C libft
-		$(CC) $(CFLAGS) $(SRCS) -L./libft -lft -o ${NAME}
+		$(CC) $(SRCS) -L./libft -lft -o ${NAME}
 
 %.o: %.c
-	${CC} $(CFLAGS) -c $<
+	${CC} -c $<
 
 # %.o: %.c
 # 	$(CC) -I/usr/include -Imlx_linux -O3 -c $< -o $@

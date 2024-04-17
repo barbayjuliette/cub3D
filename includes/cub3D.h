@@ -6,7 +6,7 @@
 /*   By: jbarbay <jbarbay@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 12:10:03 by jbarbay           #+#    #+#             */
-/*   Updated: 2024/04/10 15:08:30 by jbarbay          ###   ########.fr       */
+/*   Updated: 2024/04/15 18:01:53 by jbarbay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,22 +39,31 @@ typedef struct s_game_data
 
 int		parsing_error_colors(char *str);
 int		check_color_format(char c, int i, int num);
-void	get_colors(int *colors, char **split_line, char *line, t_game_data *data);
+void	get_colors(int *colors, char **args, char *line, t_game_data *data);
 
 void	free_array(char **array);
 int		array_len(char **arr);
 void	check_args(int argc);
 int		open_file(char *filename);
-
+void	print_map(char **map);
+char	*ft_strjoin_free(char *s1, char const *s2);
 void	free_data(t_game_data *data);
 
 void	error_parsing(char *message, char **array, char *line, t_game_data *data);
 t_game_data	*initialize_data_args(int fd);
 
-int	all_args_not_found(t_game_data *data);
-char	*prepare_next_iteration(char *line, char **split_line, int fd);
-void	check_errors_argument(char **split_line, char *line, t_game_data *data);
+int		all_args_not_found(t_game_data *data);
+char	*prepare_next_iteration(char *line, char **args, int fd);
+void	check_errors_argument(char **args, char *line, t_game_data *data);
 void	get_textures_and_colors(int fd, t_game_data *data);
 
+int		get_map(int fd, t_game_data *data);
+void	validate_map(t_game_data *data, int total_rows);
+void	check_walls(int i, int j, int total_rows, t_game_data *data);
+void	check_cub_file(char *filename);
+char	**create_new_map(char **old_map, int total_rows, char *line, t_game_data *data);
+
+int	is_quote(char **args);
+char	**get_quoted_path(char *line, char **args);
 
 #endif

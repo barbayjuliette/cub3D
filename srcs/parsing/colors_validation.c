@@ -6,11 +6,11 @@
 /*   By: jbarbay <jbarbay@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:40:40 by jbarbay           #+#    #+#             */
-/*   Updated: 2024/04/09 21:00:29 by jbarbay          ###   ########.fr       */
+/*   Updated: 2024/04/11 18:11:37 by jbarbay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3D.h"
+#include "../../includes/cub3D.h"
 
 int	parsing_error_colors(char *str)
 {
@@ -30,7 +30,7 @@ int	check_color_format(char c, int i, int num)
 	return (0);
 }
 
-void	get_colors(int *colors, char **split_line, char *line, t_game_data *data)
+void	get_colors(int *colors, char **args, char *line, t_game_data *data)
 {
 	int	num;
 	int	i;
@@ -41,15 +41,15 @@ void	get_colors(int *colors, char **split_line, char *line, t_game_data *data)
 	while (i < 3)
 	{
 		num = 0;
-		if (split_line[1][index] == '-')
-			error_parsing("R G B color cannot be negative", split_line, line, data);
-		while (ft_isdigit(split_line[1][index]))
+		if (args[1][index] == '-')
+			error_parsing("R G B color cannot be negative", args, line, data);
+		while (ft_isdigit(args[1][index]))
 		{
-			num = num * 10 + split_line[1][index] - '0';
+			num = num * 10 + args[1][index] - '0';
 			index++;
 		}
-		if (check_color_format(split_line[1][index], i, num))
-			error_parsing(NULL, split_line, line, data);
+		if (check_color_format(args[1][index], i, num))
+			error_parsing(NULL, args, line, data);
 		colors[i] = num;
 		index++;
 		i++;
