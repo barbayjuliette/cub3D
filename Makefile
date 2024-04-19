@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jbarbay <jbarbay@student.42singapore.sg    +#+  +:+       +#+         #
+#    By: jbarbay <jbarbay@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/27 15:11:22 by jbarbay           #+#    #+#              #
-#    Updated: 2024/04/15 18:03:35 by jbarbay          ###   ########.fr        #
+#    Updated: 2024/04/19 11:30:34 by jbarbay          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,21 +27,21 @@ LIBFT = ./libft
 LFLAGS = -L${LIBFT} -lft
 all: ${NAME}
 
-$(NAME):
-		@make all bonus -C libft
-		$(CC) $(SRCS) -L./libft -lft -o ${NAME}
-
-%.o: %.c
-	${CC} -c $<
+# $(NAME):
+# 		@make all bonus -C libft
+# 		$(CC) $(SRCS) -L./libft -lft -o ${NAME}
 
 # %.o: %.c
-# 	$(CC) -I/usr/include -Imlx_linux -O3 -c $< -o $@
+# 	${CC} -c $<
 
-# $(NAME): $(OBJS) runlibft
-# 	$(CC) $(OBJS) -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz -L./libft -lft -o $(NAME)
+%.o: %.c
+	$(CC) -I/usr/include -Imlx_linux -O3 -c $< -o $@
 
-# runlibft:
-# 	@make all -C libft
+$(NAME): $(OBJS) runlibft
+	$(CC) $(OBJS) -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz -L./libft -lft -o $(NAME)
+
+runlibft:
+	@make all -C libft
 
 clean:
 		${RM} ${OBJS}

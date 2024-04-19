@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbarbay <jbarbay@student.42singapore.sg    +#+  +:+       +#+        */
+/*   By: jbarbay <jbarbay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 12:10:03 by jbarbay           #+#    #+#             */
-/*   Updated: 2024/04/17 18:05:10 by jbarbay          ###   ########.fr       */
+/*   Updated: 2024/04/19 11:47:05 by jbarbay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,15 @@
 #include <stdio.h>
 
 #define BUFFER_SIZE 1
+#define HEIGHT 480
+#define WIDTH 640
+
 #include <fcntl.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <math.h>
+#include <mlx.h>
+#include <X11/keysym.h>
 #include "../libft/libft.h"
 #include "../libft/gnl/get_next_line.h"
 
@@ -35,6 +40,8 @@ typedef struct s_game_data
 	int		fd;
 	int		player_pos[2];
 	char	player_dir;
+	void	*mlx_ptr;
+	void	*win_ptr;
 
 } t_game_data;
 
