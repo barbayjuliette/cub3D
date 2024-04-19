@@ -6,7 +6,7 @@
 /*   By: jbarbay <jbarbay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 18:09:13 by jbarbay           #+#    #+#             */
-/*   Updated: 2024/04/19 15:41:59 by jbarbay          ###   ########.fr       */
+/*   Updated: 2024/04/19 16:02:37 by jbarbay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ int	all_args_not_found(t_game_data *data)
 	return (1);
 }
 
+//  We delete the new line at the end, except if it is an empty line
+
 char	*prepare_next_iteration(char *line, char **args, int fd, int first)
 {
 	char	*new_line;
@@ -34,15 +36,18 @@ char	*prepare_next_iteration(char *line, char **args, int fd, int first)
 		line = NULL;
 	}
 	new_line = get_next_line(fd);
-	trunc_line = ft_strtrim(new_line, "\n");
-	free(new_line);
-	return (trunc_line);
+	if (ft_strncmp(new_line, "\n", 2))
+	{
+		trunc_line = ft_strtrim(new_line, "\n");
+		free(new_line);
+		return (trunc_line);
+	}
+	return (new_line);
 }
 
 // 1. We found the map, but don't have all arguments yet
 // 2. No space between arguments
 // 3. Too many args on one line
-
 // If new line, ignore, just go the next iteration
 
 void	check_errors_argument(char **args, char *line, t_game_data *data)
@@ -67,6 +72,8 @@ NO ./path_to_the_north_texture \nF 220,100,0", args, line, data);
 
 void	check_identifier(t_game_data *data, char **args, char *line)
 {
+	if (!args)
+		return ;
 	if (!ft_strncmp(args[0], "NO", 3))
 		data->north_path = ft_strdup(args[1]);
 	else if (!ft_strncmp(args[0], "SO", 3))
@@ -89,11 +96,10 @@ void	get_textures_and_colors(t_game_data *data)
 	char		**args = NULL;
 
 	line = prepare_next_iteration(NULL, NULL, data->fd, 1);
-	// line = get_next_line(data->fd);
 	while (line && all_args_not_found(data))
 	{
 		args = ft_split(line, ' ');
-		check_errors_argument(args, line, data); // This line fails 
+		check_errors_argument(args, line, data);
 		if (array_len(args) > 1 && is_quote(args))
 			args = get_quoted_path(line, args);
 		check_identifier(data, args, line);

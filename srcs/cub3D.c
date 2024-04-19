@@ -6,7 +6,7 @@
 /*   By: jbarbay <jbarbay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 12:08:26 by jbarbay           #+#    #+#             */
-/*   Updated: 2024/04/19 15:44:09 by jbarbay          ###   ########.fr       */
+/*   Updated: 2024/04/19 15:52:02 by jbarbay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,12 @@ int	main(int argc, char *argv[])
 	return (0);
 }
 
+// char	*freeing(char *line, int fd)
+// {
+// 	free(line);
+// 	line = get_next_line(fd);
+// }
+
 // int	main(void)
 // {
 // 	int	fd;
@@ -48,8 +54,7 @@ int	main(int argc, char *argv[])
 // 	line = get_next_line(fd);
 // 	while (line)
 // 	{
-// 		free(line);
-// 		line = get_next_line(fd);
+// 		line = freeing(line, fd);
 // 	}
 // 	free(line);
 // 	close(fd);
