@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbarbay <jbarbay@student.42singapore.sg    +#+  +:+       +#+        */
+/*   By: jbarbay <jbarbay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 12:08:26 by jbarbay           #+#    #+#             */
-/*   Updated: 2024/04/17 13:24:04 by jbarbay          ###   ########.fr       */
+/*   Updated: 2024/04/19 15:44:09 by jbarbay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	main(int argc, char *argv[])
 	fd = open_file(argv[1]);
 	data = initialize_data_args(fd);
 	check_args(argc);
-	get_textures_and_colors(fd, data);
+	get_textures_and_colors(data);
 	total_rows = get_map(fd, data);
 	validate_map(data, total_rows);
 	close(fd);
@@ -35,5 +35,24 @@ int	main(int argc, char *argv[])
 	printf("Player direction: %c\n", data->player_dir);
 	printf("Player position: [%i, %i]\n", data->player_pos[0], data->player_pos[1]);
 	print_map(data->map);
+	free_data(data);
 	return (0);
 }
+
+// int	main(void)
+// {
+// 	int	fd;
+// 	fd = open("test.cub", O_RDONLY);
+// 	char *line;
+
+// 	line = get_next_line(fd);
+// 	while (line)
+// 	{
+// 		free(line);
+// 		line = get_next_line(fd);
+// 	}
+// 	free(line);
+// 	close(fd);
+
+// 	return (0);
+// }

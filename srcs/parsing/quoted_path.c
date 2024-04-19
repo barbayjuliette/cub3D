@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quoted_path.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbarbay <jbarbay@student.42singapore.sg    +#+  +:+       +#+        */
+/*   By: jbarbay <jbarbay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 18:01:04 by jbarbay           #+#    #+#             */
-/*   Updated: 2024/04/17 15:30:24 by jbarbay          ###   ########.fr       */
+/*   Updated: 2024/04/19 15:40:30 by jbarbay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	is_quote(char **args)
 	{
 		return (0);
 	}
-	while (args[i][j] != '\n')
+	while (args[i][j] != '\0')
 		j++;
 	if (args[i][j - 1] != 34)
 		return (0);

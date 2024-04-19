@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbarbay <jbarbay@student.42singapore.sg    +#+  +:+       +#+        */
+/*   By: jbarbay <jbarbay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:43:46 by jbarbay           #+#    #+#             */
-/*   Updated: 2024/04/15 17:59:49 by jbarbay          ###   ########.fr       */
+/*   Updated: 2024/04/19 12:16:31 by jbarbay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,9 @@ void	free_data(t_game_data *data)
 		free(data->east_path);
 	if (data->west_path)
 		free(data->west_path);
-	// ADD to FREE the map
+	if (data->map)
+		free_array(data->map);
+	free(data);
 }
 
 void	print_map(char **map)

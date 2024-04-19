@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbarbay <jbarbay@student.42singapore.sg    +#+  +:+       +#+        */
+/*   By: jbarbay <jbarbay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 12:10:03 by jbarbay           #+#    #+#             */
-/*   Updated: 2024/04/17 13:22:14 by jbarbay          ###   ########.fr       */
+/*   Updated: 2024/04/19 15:23:34 by jbarbay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,10 @@ int		get_map(int fd, t_game_data *data);
 
 // Argument parsing
 int		all_args_not_found(t_game_data *data);
-char	*prepare_next_iteration(char *line, char **args, int fd);
+char	*prepare_next_iteration(char *line, char **args, int fd, int first);
 void	check_errors_argument(char **args, char *line, t_game_data *data);
 void	check_identifier(t_game_data *data, char **args, char *line);
-void	get_textures_and_colors(int fd, t_game_data *data);
+void	get_textures_and_colors(t_game_data *data);
 
 // Get quoted path
 int		is_quote(char **args);
@@ -75,10 +75,6 @@ int		open_file(char *filename);
 t_game_data	*initialize_data_args(int fd);
 void	error_parsing(char *message, char **array, char *line, t_game_data *data);
 void	check_cub_file(char *filename);
-
-
-
-
 
 
 #endif
