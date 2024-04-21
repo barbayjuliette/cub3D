@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validation_helpers.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbarbay <jbarbay@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jbarbay <jbarbay@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 14:32:43 by jbarbay           #+#    #+#             */
-/*   Updated: 2024/04/19 14:35:04 by jbarbay          ###   ########.fr       */
+/*   Updated: 2024/04/21 10:45:30 by jbarbay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,12 @@ void	error_parsing(char *message, char **array, char *line, t_game_data *data)
 	}
 	if (array)
 		free_array(array);
-	if (line)
+	while (line)
+	{
 		free(line);
+		line = NULL;
+		line = get_next_line(data->fd);
+	}
 	if (data)
 	{
 		close(data->fd);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbarbay <jbarbay@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jbarbay <jbarbay@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 12:08:26 by jbarbay           #+#    #+#             */
-/*   Updated: 2024/04/19 15:52:02 by jbarbay          ###   ########.fr       */
+/*   Updated: 2024/04/21 10:48:48 by jbarbay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,14 @@ int	main(int argc, char *argv[])
 {
 	int			fd;
 	t_game_data	*data;
-	int	total_rows;
+	int			total_rows;
 
 	check_cub_file(argv[1]);
 	fd = open_file(argv[1]);
 	data = initialize_data_args(fd);
 	check_args(argc);
 	get_textures_and_colors(data);
-	total_rows = get_map(fd, data);
+	total_rows = get_map(data);
 	validate_map(data, total_rows);
 	close(fd);
 	printf("Path found for north: %s\n", data->north_path);
@@ -38,26 +38,3 @@ int	main(int argc, char *argv[])
 	free_data(data);
 	return (0);
 }
-
-// char	*freeing(char *line, int fd)
-// {
-// 	free(line);
-// 	line = get_next_line(fd);
-// }
-
-// int	main(void)
-// {
-// 	int	fd;
-// 	fd = open("test.cub", O_RDONLY);
-// 	char *line;
-
-// 	line = get_next_line(fd);
-// 	while (line)
-// 	{
-// 		line = freeing(line, fd);
-// 	}
-// 	free(line);
-// 	close(fd);
-
-// 	return (0);
-// }

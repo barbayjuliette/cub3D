@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_arguments.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbarbay <jbarbay@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jbarbay <jbarbay@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 18:09:13 by jbarbay           #+#    #+#             */
-/*   Updated: 2024/04/19 16:02:37 by jbarbay          ###   ########.fr       */
+/*   Updated: 2024/04/20 19:48:27 by jbarbay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ int	all_args_not_found(t_game_data *data)
 
 char	*prepare_next_iteration(char *line, char **args, int fd, int first)
 {
-	char	*new_line;
 	char	*trunc_line;
 
 	if (!first)
@@ -35,14 +34,15 @@ char	*prepare_next_iteration(char *line, char **args, int fd, int first)
 		free(line);
 		line = NULL;
 	}
-	new_line = get_next_line(fd);
-	if (ft_strncmp(new_line, "\n", 2))
-	{
-		trunc_line = ft_strtrim(new_line, "\n");
-		free(new_line);
-		return (trunc_line);
-	}
-	return (new_line);
+	line = get_next_line(fd); // HERE
+	if (line == NULL)
+		return (NULL);
+	if (ft_strncmp(line, "\n", 2) == 0)
+		return (line);
+	trunc_line = ft_strtrim(line, "\n");
+	free(line);
+	line = NULL;
+	return (trunc_line);
 }
 
 // 1. We found the map, but don't have all arguments yet
@@ -58,16 +58,9 @@ void	check_errors_argument(char **args, char *line, t_game_data *data)
 	if (!ft_strncmp(args[0], "1", 1))
 		error_parsing("Provide all arguments before the map", args, line, data);
 	else if (len == 1 && args[0][0] != '\n')
-	{
-		error_parsing("No space between arguments\n \
-Please provide arguments as follow: NO ./path_to_the_north_texture", \
-		args, line, data);
-	}
+		error_parsing("No space between arguments\nPlease provide arguments as follow: NO ./path_to_the_north_texture", args, line, data);
 	else if (len != 2 && args[0][0] != '\n' && is_quote(args) == 0)
-	{
-		error_parsing("Please provide arguments as follow 444: \
-NO ./path_to_the_north_texture \nF 220,100,0", args, line, data);
-	}
+		error_parsing("Please provide arguments as follow 444: NO ./path_to_the_north_texture \nF 220,100,0", args, line, data);
 }
 
 void	check_identifier(t_game_data *data, char **args, char *line)
@@ -92,8 +85,8 @@ void	check_identifier(t_game_data *data, char **args, char *line)
 
 void	get_textures_and_colors(t_game_data *data)
 {
-	char		*line = NULL;
-	char		**args = NULL;
+	char		*line;
+	char		**args;
 
 	line = prepare_next_iteration(NULL, NULL, data->fd, 1);
 	while (line && all_args_not_found(data))

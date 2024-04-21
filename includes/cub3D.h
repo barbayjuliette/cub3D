@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbarbay <jbarbay@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jbarbay <jbarbay@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 12:10:03 by jbarbay           #+#    #+#             */
-/*   Updated: 2024/04/19 15:23:34 by jbarbay          ###   ########.fr       */
+/*   Updated: 2024/04/20 10:18:07 by jbarbay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	check_walls(int i, int j, int total_rows, t_game_data *data);
 void	set_start_position(int	*pos, t_game_data *data, int i, int j);
 void	validate_map(t_game_data *data, int total_rows);
 char	**create_new_map(char **old_map, int total_rows, char *line, t_game_data *data);
-int		get_map(int fd, t_game_data *data);
+int		get_map(t_game_data *data);
 
 // Argument parsing
 int		all_args_not_found(t_game_data *data);
