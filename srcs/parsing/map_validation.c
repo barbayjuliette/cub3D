@@ -6,19 +6,29 @@
 /*   By: jbarbay <jbarbay@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 17:40:17 by jbarbay           #+#    #+#             */
-/*   Updated: 2024/04/17 13:26:17 by jbarbay          ###   ########.fr       */
+/*   Updated: 2024/04/21 10:51:21 by jbarbay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3D.h"
 
+int	square_is_empty(int i, int j, t_game_data *data)
+{
+	int	len;
+
+	len = ft_strlen(data->map[i]) - 1;
+	if (j > len) // above is empty
+		return (1);
+	return (0);
+}
+
 void	check_walls(int i, int j, int total_rows, t_game_data *data)
 {
 	if ((i == 0 || i == total_rows - 1) && data->map[i][j] != '1')
 		error_parsing("Map must be enclosed by walls 1", NULL, NULL, data);
-	else if (i > 0 && !(data->map[i - 1][j]) && data->map[i][j] != '1')
+	else if (i > 0 && square_is_empty(i - 1, j, data) && data->map[i][j] != '1')
 		error_parsing("Map must be enclosed by walls 11", NULL, NULL, data);
-	else if (data->map[i + 1] && !(data->map[i + 1][j]) && data->map[i][j] != '1')
+	else if (data->map[i + 1] && square_is_empty(i + 1, j, data) && data->map[i][j] != '1')
 		error_parsing("Map must be enclosed by walls 22", NULL, NULL, data);
 	else if (j == 0 && data->map[i][j] != '1')
 		error_parsing("Map must be enclosed by walls 2", NULL, NULL, data);
@@ -88,14 +98,14 @@ char	**create_new_map(char **old_map, int total_rows, char *line, t_game_data *d
 	return (new_map);
 }
 
-int	get_map(int fd, t_game_data *data)
+int	get_map(t_game_data *data)
 {
 	int		total_rows;
 	char	**map;
 	char	*line;
 
 	total_rows = 0;
-	line = get_next_line(fd);
+	line = get_next_line(data->fd);
 	map = (char **)malloc(sizeof(char *) * (total_rows + 1));
 	if (!map)
 		error_parsing("Malloc error", NULL, NULL, data);
@@ -106,10 +116,11 @@ int	get_map(int fd, t_game_data *data)
 			break ;
 		total_rows++;
 		map = create_new_map(map, total_rows, line, data);
-		line = get_next_line(fd);
+		line = get_next_line(data->fd);
 	}
+	// free(line);
 	if (total_rows == 0)
-		error_parsing("No map found", NULL, NULL, data);
+		error_parsing("No map found", map, NULL, data);
 	data->map = map;
 	return (total_rows);
 }

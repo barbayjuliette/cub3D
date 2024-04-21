@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   colors_validation.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbarbay <jbarbay@student.42singapore.sg    +#+  +:+       +#+        */
+/*   By: jbarbay <jbarbay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:40:40 by jbarbay           #+#    #+#             */
-/*   Updated: 2024/04/11 18:11:37 by jbarbay          ###   ########.fr       */
+/*   Updated: 2024/04/19 15:18:58 by jbarbay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	check_color_format(char c, int i, int num)
 {
 	if (i < 2 && c != ',')
 		return (parsing_error_colors("Wrong format for color"));
-	else if (i == 2 && c != '\n')
+	else if (i == 2 && c != '\0')
 		return (parsing_error_colors("Too many args after colors"));
 	else if (num < 0 || num > 255)
 		return (parsing_error_colors("R,G,B colors must be in range [0,255]"));
