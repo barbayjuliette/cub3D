@@ -6,7 +6,7 @@
 /*   By: jbarbay <jbarbay@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 14:32:43 by jbarbay           #+#    #+#             */
-/*   Updated: 2024/04/15 17:03:29 by jbarbay          ###   ########.fr       */
+/*   Updated: 2024/04/21 10:45:30 by jbarbay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,16 @@ void	error_parsing(char *message, char **array, char *line, t_game_data *data)
 	}
 	if (array)
 		free_array(array);
-	if (line)
+	while (line)
+	{
 		free(line);
+		line = NULL;
+		line = get_next_line(data->fd);
+	}
 	if (data)
 	{
 		close(data->fd);
 		free_data(data);
-		if (data->map)
-			free_array(data->map);
 	}
 	exit(1);
 }

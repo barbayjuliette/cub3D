@@ -6,7 +6,7 @@
 #    By: jbarbay <jbarbay@student.42singapore.sg    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/27 15:11:22 by jbarbay           #+#    #+#              #
-#    Updated: 2024/04/15 18:03:35 by jbarbay          ###   ########.fr        #
+#    Updated: 2024/04/20 19:24:00 by jbarbay          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ SRCS =  srcs/cub3D.c \
 		srcs/parsing/utils.c \
 		srcs/parsing/quoted_path.c
 
-CC = cc
+CC = cc -g
 CFLAGS = -Wall -Wextra -Werror
 RM = rm -rf
 NAME = cub3D
@@ -29,7 +29,7 @@ all: ${NAME}
 
 $(NAME):
 		@make all bonus -C libft
-		$(CC) $(SRCS) -L./libft -lft -o ${NAME}
+		$(CC) $(SRCS) -L./libft -lft -L/usr/local -llsan -o ${NAME}
 
 %.o: %.c
 	${CC} -c $<

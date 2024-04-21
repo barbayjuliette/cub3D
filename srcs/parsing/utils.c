@@ -6,7 +6,7 @@
 /*   By: jbarbay <jbarbay@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:43:46 by jbarbay           #+#    #+#             */
-/*   Updated: 2024/04/15 17:59:49 by jbarbay          ###   ########.fr       */
+/*   Updated: 2024/04/19 21:29:41 by jbarbay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,14 @@ char	*ft_strjoin_free(char *s1, char const *s2)
 
 void	check_args(int argc)
 {
-	if (argc != 2)
+	if (argc < 2)
 	{
 		ft_putstr_fd("Error\nPlease provide a map in format in format *.cub\n", 1);
+		exit(1);
+	}
+	else if (argc > 2)
+	{
+		ft_putstr_fd("Error\nPlease only provide the map\n", 1);
 		exit(1);
 	}
 }
@@ -83,7 +88,9 @@ void	free_data(t_game_data *data)
 		free(data->east_path);
 	if (data->west_path)
 		free(data->west_path);
-	// ADD to FREE the map
+	if (data->map)
+		free_array(data->map);
+	free(data);
 }
 
 void	print_map(char **map)
