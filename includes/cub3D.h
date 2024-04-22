@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbarbay <jbarbay@student.42singapore.sg    +#+  +:+       +#+        */
+/*   By: jbarbay <jbarbay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 12:10:03 by jbarbay           #+#    #+#             */
-/*   Updated: 2024/04/21 11:08:58 by jbarbay          ###   ########.fr       */
+/*   Updated: 2024/04/22 17:04:55 by jbarbay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,17 @@
 #include "../libft/libft.h"
 #include "../libft/gnl/get_next_line.h"
 
+typedef struct s_img
+{
+	void	*img_ptr;
+	char	*addr;
+	int		height;
+	int		width;
+	int		bpp;
+	int		endian;
+	int		line_len;
+}	t_img;
+
 typedef struct s_game_data
 {
 	char	*north_path;
@@ -42,8 +53,48 @@ typedef struct s_game_data
 	char	player_dir;
 	void	*mlx_ptr;
 	void	*win_ptr;
+	t_img	*north_text;
+	t_img	*south_text;
+	t_img	*east_text;
+	t_img	*west_text;
 
 } t_game_data;
+
+typedef struct s_raycast
+{
+	double		position_x;
+	double		position_y;
+	double		camera_plane_x;
+	double		camera_plane_y;
+	double		direction_x;
+	double		direction_y;
+	double		camera_x;
+	double		ray_dir_x;
+	double		ray_dir_y;
+	int			map_x;
+	int			map_y;
+	double		side_dist_x;
+	double		side_dist_y;
+	double		delta_dist_x;
+	double		delta_dist_y;
+	double		perp_wall_dist;
+	int			step_x;
+	int			step_y;
+	int			hit;
+	int			side; // NS hit (y-side): 1, EW wall hit (x-side): 0
+	int			line_height;
+} t_raycast;
+
+typedef  struct  s_vert_line
+{
+	int  x; //the x coordinate of line relative to screen
+	int  y; //the current pixel index of the line (along y axis)
+	int  y0; //y start index of drawing texture
+	int  y1; //y end index of drawing texture
+	int  tex_x; //x coordinate of texture to draw
+	int  tex_y; //y coordinate of texture to draw
+} t_vert_line;
+
 
 // Map validation and reading
 
@@ -83,6 +134,10 @@ int		open_file(char *filename);
 t_game_data	*initialize_data_args(int fd);
 void	error_parsing(char *message, char **array, char *line, t_game_data *data);
 void	check_cub_file(char *filename);
+
+// Raycasting
+void	raycasting(t_game_data *data);
+t_raycast	*initialize_raycasting_data(t_game_data *data);
 
 
 #endif

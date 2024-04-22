@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validation_helpers.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbarbay <jbarbay@student.42singapore.sg    +#+  +:+       +#+        */
+/*   By: jbarbay <jbarbay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 14:32:43 by jbarbay           #+#    #+#             */
-/*   Updated: 2024/04/21 10:45:30 by jbarbay          ###   ########.fr       */
+/*   Updated: 2024/04/22 17:46:49 by jbarbay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,11 @@ t_game_data	*initialize_data_args(int fd)
 	data->ceiling_color[0] = 266;
 	data->floor_color[0] = 266;
 	data->fd = fd;
+	data->north_text = NULL;
+	data->south_text = NULL;
+	data->west_text = NULL;
+	data->east_text = NULL;
+	data->mlx_ptr = NULL;
 	return (data);
 }
 

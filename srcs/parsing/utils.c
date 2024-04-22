@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbarbay <jbarbay@student.42singapore.sg    +#+  +:+       +#+        */
+/*   By: jbarbay <jbarbay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:43:46 by jbarbay           #+#    #+#             */
-/*   Updated: 2024/04/19 21:29:41 by jbarbay          ###   ########.fr       */
+/*   Updated: 2024/04/22 17:36:42 by jbarbay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,11 @@ void	free_array(char **array)
 	while (array[i])
 	{
 		free(array[i]);
+		array[i] = NULL;
 		i++;
 	}
 	free(array);
+	array = NULL;
 }
 
 int	array_len(char **arr)
@@ -91,6 +93,7 @@ void	free_data(t_game_data *data)
 	if (data->map)
 		free_array(data->map);
 	free(data);
+	data = NULL;
 }
 
 void	print_map(char **map)
