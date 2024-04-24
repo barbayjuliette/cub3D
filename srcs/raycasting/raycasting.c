@@ -6,7 +6,7 @@
 /*   By: jbarbay <jbarbay@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 12:04:44 by jbarbay           #+#    #+#             */
-/*   Updated: 2024/04/24 10:37:20 by jbarbay          ###   ########.fr       */
+/*   Updated: 2024/04/24 11:05:31 by jbarbay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,30 +22,36 @@ t_raycast	*initialize_raycasting_data(t_game_data *data)
 	t_raycast	*ray_data;
 
 	ray_data = (t_raycast *)malloc(sizeof(t_raycast));
-	ray_data->position_x = data->player_pos[0];
-	ray_data->position_y = data->player_pos[1];
+	ray_data->position_x = data->player_pos[0] + 0.5;
+	ray_data->position_y = data->player_pos[1] - 0.5;
 	if (data->player_dir == 'N')
 	{
 		ray_data->direction_x = 0;
 		ray_data->direction_y = -1;
+		ray_data->camera_plane_x = -0.66;
+		ray_data->camera_plane_y = 0;
 	}
 	if (data->player_dir == 'S')
 	{
 		ray_data->direction_x = 0;
 		ray_data->direction_y = 1;
+		ray_data->camera_plane_x = 0.66;
+		ray_data->camera_plane_y = 0;
 	}
 	if (data->player_dir == 'W')
 	{
 		ray_data->direction_x = -1;
 		ray_data->direction_y = 0;
+		ray_data->camera_plane_x = 0;
+		ray_data->camera_plane_y = 0.66;
 	}
 	if (data->player_dir == 'E')
 	{
 		ray_data->direction_x = 1;
 		ray_data->direction_y = 0;
+		ray_data->camera_plane_x = 0;
+		ray_data->camera_plane_y = -0.66;
 	}
-	ray_data->camera_plane_x = ray_data->direction_y;
-	ray_data->camera_plane_y = 0.66;
 	return (ray_data);
 }
 
