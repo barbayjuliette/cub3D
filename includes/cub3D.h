@@ -6,7 +6,7 @@
 /*   By: jbarbay <jbarbay@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 12:10:03 by jbarbay           #+#    #+#             */
-/*   Updated: 2024/04/23 23:34:37 by jbarbay          ###   ########.fr       */
+/*   Updated: 2024/04/24 16:03:26 by jbarbay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,12 +87,10 @@ typedef struct s_raycast
 	int			line_height;
 	int			line_start;
 	int			line_end;
-	int			wall_x;
+	double			wall_x;
 	int			tex_x;
 	int			tex_y;
 	t_img		*text;
-	double		step_pixel;
-	double		text_pos;
 } t_raycast;
 
 // Map validation and reading
