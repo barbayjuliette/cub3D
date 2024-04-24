@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validation_helpers.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbarbay <jbarbay@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jbarbay <jbarbay@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 14:32:43 by jbarbay           #+#    #+#             */
-/*   Updated: 2024/04/22 17:46:49 by jbarbay          ###   ########.fr       */
+/*   Updated: 2024/04/24 18:19:31 by jbarbay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,4 +66,16 @@ void	check_cub_file(char *filename)
 	result = ft_strncmp(filename, ".cub", 4);
 	if (result != 0)
 		error_parsing("Please provide all the arguments in a .ber file", NULL, NULL, NULL);
+}
+
+void	check_xpm(char *filename, t_game_data *data)
+{
+	int	length;
+	int	result;
+
+	length = ft_strlen(filename);
+	filename += (length - 4);
+	result = ft_strncmp(filename, ".xpm", 4);
+	if (result != 0)
+		error_parsing("Please provide textures in XPM format", NULL, NULL, data);
 }

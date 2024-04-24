@@ -6,7 +6,7 @@
 /*   By: jbarbay <jbarbay@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 12:10:03 by jbarbay           #+#    #+#             */
-/*   Updated: 2024/04/24 18:05:50 by jbarbay          ###   ########.fr       */
+/*   Updated: 2024/04/24 18:19:33 by jbarbay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,8 @@ int		open_file(char *filename);
 t_game_data	*initialize_data_args(int fd);
 void	error_parsing(char *message, char **array, char *line, t_game_data *data);
 void	check_cub_file(char *filename);
+void	check_xpm(char *filename, t_game_data *data);
+
 
 // Raycasting
 void		raycasting(t_game_data *data);

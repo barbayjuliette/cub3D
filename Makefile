@@ -6,7 +6,7 @@
 #    By: jbarbay <jbarbay@student.42singapore.sg    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/27 15:11:22 by jbarbay           #+#    #+#              #
-#    Updated: 2024/04/24 18:04:27 by jbarbay          ###   ########.fr        #
+#    Updated: 2024/04/24 18:10:17 by jbarbay          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -70,6 +70,9 @@ bonus: fclean $(B_OBJ)
 # 		srcs/parsing/get_arguments.c \
 # 		srcs/parsing/utils.c \
 # 		srcs/parsing/quoted_path.c
+#		srcs/raycasting/raycasting \
+# 		srcs/raycasting/draw \
+# 		srcs/raycasting/calculations \
 
 # CC = cc -g
 # CFLAGS = -Wall -Wextra -Werror
