@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbarbay <jbarbay@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jbarbay <jbarbay@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 12:10:03 by jbarbay           #+#    #+#             */
-/*   Updated: 2024/04/22 17:04:55 by jbarbay          ###   ########.fr       */
+/*   Updated: 2024/04/23 23:34:37 by jbarbay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,16 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <math.h>
-#include <mlx.h>
-#include <X11/keysym.h>
+// #include <mlx.h>
+# include "../mlxopengl/mlx.h"
+// #include <X11/keysym.h>
 #include "../libft/libft.h"
 #include "../libft/gnl/get_next_line.h"
 
 typedef struct s_img
 {
 	void	*img_ptr;
-	char	*addr;
+	int		*addr;
 	int		height;
 	int		width;
 	int		bpp;
@@ -57,6 +58,7 @@ typedef struct s_game_data
 	t_img	*south_text;
 	t_img	*east_text;
 	t_img	*west_text;
+	t_img	*screen;
 
 } t_game_data;
 
@@ -83,18 +85,15 @@ typedef struct s_raycast
 	int			hit;
 	int			side; // NS hit (y-side): 1, EW wall hit (x-side): 0
 	int			line_height;
+	int			line_start;
+	int			line_end;
+	int			wall_x;
+	int			tex_x;
+	int			tex_y;
+	t_img		*text;
+	double		step_pixel;
+	double		text_pos;
 } t_raycast;
-
-typedef  struct  s_vert_line
-{
-	int  x; //the x coordinate of line relative to screen
-	int  y; //the current pixel index of the line (along y axis)
-	int  y0; //y start index of drawing texture
-	int  y1; //y end index of drawing texture
-	int  tex_x; //x coordinate of texture to draw
-	int  tex_y; //y coordinate of texture to draw
-} t_vert_line;
-
 
 // Map validation and reading
 
@@ -136,7 +135,7 @@ void	error_parsing(char *message, char **array, char *line, t_game_data *data);
 void	check_cub_file(char *filename);
 
 // Raycasting
-void	raycasting(t_game_data *data);
+void		raycasting(t_game_data *data);
 t_raycast	*initialize_raycasting_data(t_game_data *data);
 
 
