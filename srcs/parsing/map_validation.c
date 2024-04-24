@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_validation.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbarbay <jbarbay@student.42singapore.sg    +#+  +:+       +#+        */
+/*   By: jbarbay <jbarbay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 17:40:17 by jbarbay           #+#    #+#             */
-/*   Updated: 2024/04/21 10:51:21 by jbarbay          ###   ########.fr       */
+/*   Updated: 2024/04/22 12:15:49 by jbarbay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ void	set_start_position(int	*pos, t_game_data *data, int i, int j)
 	if (*pos > 0)
 		error_parsing("Position only one starting player", NULL, NULL, data);
 	data->player_dir = data->map[i][j];
-	data->player_pos[0] = i;
-	data->player_pos[1] = j;
+	data->player_pos[0] = j;
+	data->player_pos[1] = i;
 	(*pos)++;
 }
 

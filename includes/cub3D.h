@@ -6,7 +6,7 @@
 /*   By: jbarbay <jbarbay@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 12:10:03 by jbarbay           #+#    #+#             */
-/*   Updated: 2024/04/20 10:18:07 by jbarbay          ###   ########.fr       */
+/*   Updated: 2024/04/24 18:19:33 by jbarbay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,29 @@
 #include <stdio.h>
 
 #define BUFFER_SIZE 1
+#define HEIGHT 480 * 2
+#define WIDTH 640 * 2
+
 #include <fcntl.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <math.h>
+// #include <mlx.h>
+# include "../mlxopengl/mlx.h"
+// #include <X11/keysym.h>
 #include "../libft/libft.h"
 #include "../libft/gnl/get_next_line.h"
+
+typedef struct s_img
+{
+	void	*img_ptr;
+	int		*addr;
+	int		height;
+	int		width;
+	int		bpp;
+	int		endian;
+	int		line_len;
+}	t_img;
 
 typedef struct s_game_data
 {
@@ -34,8 +52,46 @@ typedef struct s_game_data
 	int		fd;
 	int		player_pos[2];
 	char	player_dir;
+	void	*mlx_ptr;
+	void	*win_ptr;
+	t_img	*north_text;
+	t_img	*south_text;
+	t_img	*east_text;
+	t_img	*west_text;
+	t_img	*screen;
 
 } t_game_data;
+
+typedef struct s_raycast
+{
+	double		position_x;
+	double		position_y;
+	double		camera_plane_x;
+	double		camera_plane_y;
+	double		direction_x;
+	double		direction_y;
+	double		camera_x;
+	double		ray_dir_x;
+	double		ray_dir_y;
+	int			map_x;
+	int			map_y;
+	double		side_dist_x;
+	double		side_dist_y;
+	double		delta_dist_x;
+	double		delta_dist_y;
+	double		perp_wall_dist;
+	int			step_x;
+	int			step_y;
+	int			hit;
+	int			side; // NS hit (y-side): 1, EW wall hit (x-side): 0
+	int			line_height;
+	int			line_start;
+	int			line_end;
+	double		wall_x;
+	int			tex_x;
+	int			tex_y;
+	t_img		*text;
+} t_raycast;
 
 // Map validation and reading
 
@@ -75,6 +131,27 @@ int		open_file(char *filename);
 t_game_data	*initialize_data_args(int fd);
 void	error_parsing(char *message, char **array, char *line, t_game_data *data);
 void	check_cub_file(char *filename);
+void	check_xpm(char *filename, t_game_data *data);
 
 
+// Raycasting
+void		raycasting(t_game_data *data);
+t_raycast	*initialize_raycasting_data(t_game_data *data);
+void		choose_texture(t_game_data *data, t_raycast *ray);
+void		calculate_vars(t_raycast *ray, int x);
+
+
+// Colors
+int		create_trgb(int t, int r, int g, int b);
+void	draw_line(t_game_data *data, t_raycast *ray, int x);
+void	draw_ceiling(t_game_data *data, t_raycast *ray, int x);
+void	draw_floor(t_game_data *data, t_raycast *ray, int x);
+
+
+// Calculations
+void	calculate_steps(t_raycast *ray);
+void	wall_hit(t_game_data *data, t_raycast *ray);
+void	calculate_ray(t_raycast *ray);
+void	get_pixel_texture(t_raycast *ray);
+void	calculate_line(t_raycast *ray);
 #endif
