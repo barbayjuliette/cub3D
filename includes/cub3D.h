@@ -6,7 +6,7 @@
 /*   By: jbarbay <jbarbay@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 12:10:03 by jbarbay           #+#    #+#             */
-/*   Updated: 2024/04/24 17:21:32 by jbarbay          ###   ########.fr       */
+/*   Updated: 2024/04/24 17:39:21 by jbarbay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 #include <stdio.h>
 
 #define BUFFER_SIZE 1
-#define HEIGHT 480
-#define WIDTH 640
+#define HEIGHT 480 * 2
+#define WIDTH 640 * 2
 
 #include <fcntl.h>
 #include <stdlib.h>

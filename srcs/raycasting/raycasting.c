@@ -6,7 +6,7 @@
 /*   By: jbarbay <jbarbay@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 12:04:44 by jbarbay           #+#    #+#             */
-/*   Updated: 2024/04/24 17:21:39 by jbarbay          ###   ########.fr       */
+/*   Updated: 2024/04/24 17:48:32 by jbarbay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ void	calculate_steps(t_raycast *ray)
 // Side :
 // 		1: We hit the y-side
 // 		0: We hit the x-side
+
 void	wall_hit(t_game_data *data, t_raycast *ray)
 {
 	ray->hit = 0;
@@ -168,11 +169,6 @@ void	get_pixel_texture(t_raycast *ray)
 		ray->tex_x = ray->text->width - ray->tex_x - 1;
 }
 
-int		create_trgb(int t, int r, int g, int b)
-{
-	return(t << 24 | r << 16 | g << 8 | b);
-}
-
 // Coordinate of start texture
 // How much to increase the texture coordinate per screen pixel
 // Add the right pixel from the texture to the address
@@ -199,6 +195,46 @@ void	draw_line(t_game_data *data, t_raycast *ray, int x)
 	}
 }
 
+int		create_trgb(int t, int r, int g, int b)
+{
+	return(t << 24 | r << 16 | g << 8 | b);
+}
+
+void	draw_ceiling(t_game_data *data, t_raycast *ray, int x)
+{
+	int	y;
+	int	r;
+	int	g;
+	int	b;
+
+	r = data->ceiling_color[0];
+	g = data->ceiling_color[1];
+	b = data->ceiling_color[2];
+	y = 0;
+	while (y < ray->line_start)
+	{
+		data->screen->addr[(y * WIDTH) + x] = create_trgb(0, r, g, b);
+		y++;
+	}
+}
+
+void	draw_floor(t_game_data *data, t_raycast *ray, int x)
+{
+	int	y;
+	int	r;
+	int	g;
+	int	b;
+
+	r = data->floor_color[0];
+	g = data->floor_color[1];
+	b = data->floor_color[2];
+	y = ray->line_end;
+	while (y < HEIGHT)
+	{
+		data->screen->addr[(y * WIDTH) + x] = create_trgb(0, r, g, b);
+		y++;
+	}
+}
 
 void	calculate_line(t_game_data *data, t_raycast *ray)
 {
@@ -249,6 +285,8 @@ void	raycasting(t_game_data *data)
 		calculate_line(data, ray);
 		get_pixel_texture(ray);
 		draw_line(data, ray, x);
+		draw_floor(data, ray, x);
+		draw_ceiling(data, ray, x);
 		x++;
 	}
 }
