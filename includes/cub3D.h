@@ -6,7 +6,7 @@
 /*   By: jbarbay <jbarbay@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 12:10:03 by jbarbay           #+#    #+#             */
-/*   Updated: 2024/04/24 17:39:21 by jbarbay          ###   ########.fr       */
+/*   Updated: 2024/04/24 18:05:50 by jbarbay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,21 @@ void	check_cub_file(char *filename);
 // Raycasting
 void		raycasting(t_game_data *data);
 t_raycast	*initialize_raycasting_data(t_game_data *data);
+void		choose_texture(t_game_data *data, t_raycast *ray);
+void		calculate_vars(t_raycast *ray, int x);
 
 
+// Colors
+int		create_trgb(int t, int r, int g, int b);
+void	draw_line(t_game_data *data, t_raycast *ray, int x);
+void	draw_ceiling(t_game_data *data, t_raycast *ray, int x);
+void	draw_floor(t_game_data *data, t_raycast *ray, int x);
+
+
+// Calculations
+void	calculate_steps(t_raycast *ray);
+void	wall_hit(t_game_data *data, t_raycast *ray);
+void	calculate_ray(t_raycast *ray);
+void	get_pixel_texture(t_raycast *ray);
+void	calculate_line(t_raycast *ray);
 #endif

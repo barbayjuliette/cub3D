@@ -6,14 +6,14 @@
 #    By: jbarbay <jbarbay@student.42singapore.sg    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/27 15:11:22 by jbarbay           #+#    #+#              #
-#    Updated: 2024/04/23 11:07:48 by jbarbay          ###   ########.fr        #
+#    Updated: 2024/04/24 18:04:27 by jbarbay          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # MAC
 NAME = cub3D
 CC = gcc
-CFLAGS = -g
+CFLAGS = -Wall -Wextra -Werror -g
 MLX = mlxopengl
 LIBFT = ./libft
 LFLAGS = -L${LIBFT} -lft
@@ -28,6 +28,8 @@ SRC = cub3D \
 		parsing/utils \
 		parsing/quoted_path \
 		raycasting/raycasting \
+		raycasting/draw \
+		raycasting/calculations
 
 FIL = $(addsuffix .c, $(addprefix srcs/, $(SRC)))
 LEAKS = -L/usr/local -llsan
