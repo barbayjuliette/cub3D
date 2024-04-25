@@ -6,7 +6,7 @@
 /*   By: jbarbay <jbarbay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 17:40:17 by jbarbay           #+#    #+#             */
-/*   Updated: 2024/04/22 12:15:49 by jbarbay          ###   ########.fr       */
+/*   Updated: 2024/04/25 13:08:33 by jbarbay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ char	**create_new_map(char **old_map, int total_rows, char *line, t_game_data *d
 	i = 0;
 	new_map = (char **)malloc(sizeof(char *) * (total_rows + 1));
 	if (!new_map)
-		error_parsing("Malloc error", NULL, NULL, data);
+		error_parsing("Memory allocation error", NULL, NULL, data);
 	while (old_map[i])
 	{
 		new_map[i] = old_map[i];
@@ -108,7 +108,7 @@ int	get_map(t_game_data *data)
 	line = get_next_line(data->fd);
 	map = (char **)malloc(sizeof(char *) * (total_rows + 1));
 	if (!map)
-		error_parsing("Malloc error", NULL, NULL, data);
+		error_parsing("Memory allocation error", NULL, NULL, data);
 	map[0] = NULL;
 	while (line)
 	{

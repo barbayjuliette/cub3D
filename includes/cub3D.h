@@ -6,7 +6,7 @@
 /*   By: jbarbay <jbarbay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 12:10:03 by jbarbay           #+#    #+#             */
-/*   Updated: 2024/04/25 12:36:52 by jbarbay          ###   ########.fr       */
+/*   Updated: 2024/04/25 13:10:15 by jbarbay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,7 @@ void	check_args(int argc);
 void	print_map(char **map);
 void	free_data(t_game_data *data);
 int		open_file(char *filename);
+void	malloc_error(t_game_data *data);
 
 // Validation helpers
 t_game_data	*initialize_data_args(int fd);

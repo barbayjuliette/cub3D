@@ -6,7 +6,7 @@
 /*   By: jbarbay <jbarbay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 12:04:44 by jbarbay           #+#    #+#             */
-/*   Updated: 2024/04/25 12:22:02 by jbarbay          ###   ########.fr       */
+/*   Updated: 2024/04/25 13:09:30 by jbarbay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ t_raycast	*initialize_raycasting_data(t_game_data *data)
 	t_raycast	*ray;
 
 	ray = (t_raycast *)malloc(sizeof(t_raycast));
+	if (!ray)
+		malloc_error(data);
 	data->ray = ray;
 	ray->position_x = data->player_pos[0] + 0.5;
 	ray->position_y = data->player_pos[1] + 0.5;

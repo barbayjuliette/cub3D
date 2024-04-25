@@ -6,7 +6,7 @@
 /*   By: jbarbay <jbarbay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 12:08:26 by jbarbay           #+#    #+#             */
-/*   Updated: 2024/04/25 12:48:50 by jbarbay          ###   ########.fr       */
+/*   Updated: 2024/04/25 13:03:38 by jbarbay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	test_helper(t_game_data *data)
 	print_map(data->map);
 }
 
-int	exit_program(t_game_data *data)
+void	free_textures(t_game_data *data)
 {
 	if (data->north_text)
 	{
@@ -47,6 +47,11 @@ int	exit_program(t_game_data *data)
 		mlx_destroy_image(data->mlx_ptr, data->east_text->img_ptr);
 		free(data->east_text);
 	}
+}
+
+int	exit_program(t_game_data *data)
+{
+	free_textures(data);
 	if (data->ray)
 		free(data->ray);
 	if (data->screen)
@@ -56,8 +61,11 @@ int	exit_program(t_game_data *data)
 	}
 	if (data->win_ptr)
 		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
-	mlx_destroy_display(data->mlx_ptr);
-	free(data->mlx_ptr);
+	if (data->mlx_ptr)
+	{
+		mlx_destroy_display(data->mlx_ptr);
+		free(data->mlx_ptr);
+	}
 	free_data(data);
 	exit(0);
 }
@@ -89,15 +97,18 @@ t_img	*create_img(t_game_data *data, char *path, char *dir)
 
 	texture = malloc(sizeof(t_img));
 	if (!texture)
-	{
-		ft_putendl_fd("malloc error", 1);
-		exit(1);
-	}
+		malloc_error(data);
 	texture->img_ptr = mlx_xpm_file_to_image(data->mlx_ptr, path, &(texture->width), &(texture->height));
 	if (texture->img_ptr == NULL)
 		error_image(data, dir, texture);
 	texture->addr = (int *)mlx_get_data_addr(texture->img_ptr, &(texture->bpp), &(texture->line_len), &(texture->endian));
 	return (texture);
+}
+
+void	malloc_error(t_game_data *data)
+{
+	ft_putstr_fd("Memory allocation error\n", 1);
+	exit_program(data);
 }
 
 void	create_textures(t_game_data *data)
@@ -111,6 +122,8 @@ void	create_textures(t_game_data *data)
 
 	// Create screen image to add pixels to it later
 	screen = malloc(sizeof(t_img));
+	if (!screen)
+		malloc_error(data);
 	screen->img_ptr = mlx_new_image(data->mlx_ptr, WIDTH, HEIGHT);
 	screen->addr = (int *)mlx_get_data_addr(screen->img_ptr, &(screen->bpp), &(screen->line_len), &(screen->endian));
 	data->screen = screen;
@@ -120,15 +133,11 @@ void	start_cub(t_game_data *data)
 {
 	data->mlx_ptr = mlx_init();
 	if (!data->mlx_ptr)
-		exit(1); // End and free everything
+		malloc_error(data);
 	create_textures(data);
 	data->win_ptr = mlx_new_window(data->mlx_ptr, WIDTH, HEIGHT, "cub3d");
 	if (!data->win_ptr)
-	{
-		// mlx_destroy_display(data->mlx_ptr);
-		free(data->mlx_ptr);
-		exit(1); // Free everything else
-	}
+		malloc_error(data);
 	mlx_hook(data->win_ptr, 17, 0, exit_program, data);
 	mlx_key_hook(data->win_ptr, handle_input, data);
 	raycasting(data);

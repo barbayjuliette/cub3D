@@ -6,7 +6,7 @@
 /*   By: jbarbay <jbarbay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 14:32:43 by jbarbay           #+#    #+#             */
-/*   Updated: 2024/04/25 12:46:50 by jbarbay          ###   ########.fr       */
+/*   Updated: 2024/04/25 13:07:48 by jbarbay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ t_game_data	*initialize_data_args(int fd)
 	t_game_data	*data;
 
 	data = (t_game_data *)malloc(sizeof(t_game_data));
+	if (!data)
+		error_parsing("Memory allocation error", NULL, NULL, NULL);
 	data->north_path = NULL;
 	data->south_path = NULL;
 	data->west_path = NULL;
