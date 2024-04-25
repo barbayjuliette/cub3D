@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbarbay <jbarbay@student.42singapore.sg    +#+  +:+       +#+        */
+/*   By: jbarbay <jbarbay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 12:04:44 by jbarbay           #+#    #+#             */
-/*   Updated: 2024/04/24 18:06:39 by jbarbay          ###   ########.fr       */
+/*   Updated: 2024/04/25 12:22:02 by jbarbay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ t_raycast	*initialize_raycasting_data(t_game_data *data)
 	t_raycast	*ray;
 
 	ray = (t_raycast *)malloc(sizeof(t_raycast));
+	data->ray = ray;
 	ray->position_x = data->player_pos[0] + 0.5;
 	ray->position_y = data->player_pos[1] + 0.5;
 	if (data->player_dir == 'N')

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validation_helpers.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbarbay <jbarbay@student.42singapore.sg    +#+  +:+       +#+        */
+/*   By: jbarbay <jbarbay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 14:32:43 by jbarbay           #+#    #+#             */
-/*   Updated: 2024/04/24 18:19:31 by jbarbay          ###   ########.fr       */
+/*   Updated: 2024/04/25 12:46:50 by jbarbay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,9 @@ t_game_data	*initialize_data_args(int fd)
 	data->west_text = NULL;
 	data->east_text = NULL;
 	data->mlx_ptr = NULL;
+	data->win_ptr = NULL;
+	data->ray = NULL;
+	data->screen = NULL;
 	return (data);
 }
 
@@ -68,7 +71,7 @@ void	check_cub_file(char *filename)
 		error_parsing("Please provide all the arguments in a .ber file", NULL, NULL, NULL);
 }
 
-void	check_xpm(char *filename, t_game_data *data)
+void	check_xpm(char *filename, t_game_data *data, char *line)
 {
 	int	length;
 	int	result;
@@ -77,5 +80,5 @@ void	check_xpm(char *filename, t_game_data *data)
 	filename += (length - 4);
 	result = ft_strncmp(filename, ".xpm", 4);
 	if (result != 0)
-		error_parsing("Please provide textures in XPM format", NULL, NULL, data);
+		error_parsing("Please provide textures in XPM format", NULL, line, data);
 }

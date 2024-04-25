@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbarbay <jbarbay@student.42singapore.sg    +#+  +:+       +#+        */
+/*   By: jbarbay <jbarbay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 12:08:26 by jbarbay           #+#    #+#             */
-/*   Updated: 2024/04/24 10:37:42 by jbarbay          ###   ########.fr       */
+/*   Updated: 2024/04/25 12:48:50 by jbarbay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,16 @@ int	exit_program(t_game_data *data)
 		mlx_destroy_image(data->mlx_ptr, data->east_text->img_ptr);
 		free(data->east_text);
 	}
-	mlx_destroy_window(data->mlx_ptr, data->win_ptr);
-	// mlx_destroy_display(data->mlx_ptr);
+	if (data->ray)
+		free(data->ray);
+	if (data->screen)
+	{
+		mlx_destroy_image(data->mlx_ptr, data->screen->img_ptr);
+		free(data->screen);
+	}
+	if (data->win_ptr)
+		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
+	mlx_destroy_display(data->mlx_ptr);
 	free(data->mlx_ptr);
 	free_data(data);
 	exit(0);
@@ -56,7 +64,7 @@ int	exit_program(t_game_data *data)
 
 int	handle_input(int keysym, t_game_data *data)
 {
-	if (keysym == 101)
+	if (keysym == XK_Escape)
 	{
 		write(1, "Giving up so fast?\n", 19);
 		exit_program(data);
@@ -86,9 +94,9 @@ t_img	*create_img(t_game_data *data, char *path, char *dir)
 		exit(1);
 	}
 	texture->img_ptr = mlx_xpm_file_to_image(data->mlx_ptr, path, &(texture->width), &(texture->height));
-	texture->addr = (int *)mlx_get_data_addr(texture->img_ptr, &(texture->bpp), &(texture->line_len), &(texture->endian));
 	if (texture->img_ptr == NULL)
 		error_image(data, dir, texture);
+	texture->addr = (int *)mlx_get_data_addr(texture->img_ptr, &(texture->bpp), &(texture->line_len), &(texture->endian));
 	return (texture);
 }
 
@@ -100,7 +108,6 @@ void	create_textures(t_game_data *data)
 	data->south_text = create_img(data, data->south_path, "south");
 	data->west_text = create_img(data, data->west_path, "west");
 	data->east_text = create_img(data, data->east_path, "east");
-	// mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->north_text->img_ptr, 10, 10);
 
 	// Create screen image to add pixels to it later
 	screen = malloc(sizeof(t_img));
@@ -114,6 +121,7 @@ void	start_cub(t_game_data *data)
 	data->mlx_ptr = mlx_init();
 	if (!data->mlx_ptr)
 		exit(1); // End and free everything
+	create_textures(data);
 	data->win_ptr = mlx_new_window(data->mlx_ptr, WIDTH, HEIGHT, "cub3d");
 	if (!data->win_ptr)
 	{
@@ -121,7 +129,6 @@ void	start_cub(t_game_data *data)
 		free(data->mlx_ptr);
 		exit(1); // Free everything else
 	}
-	create_textures(data);
 	mlx_hook(data->win_ptr, 17, 0, exit_program, data);
 	mlx_key_hook(data->win_ptr, handle_input, data);
 	raycasting(data);

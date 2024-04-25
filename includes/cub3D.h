@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbarbay <jbarbay@student.42singapore.sg    +#+  +:+       +#+        */
+/*   By: jbarbay <jbarbay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 12:10:03 by jbarbay           #+#    #+#             */
-/*   Updated: 2024/04/24 18:19:33 by jbarbay          ###   ########.fr       */
+/*   Updated: 2024/04/25 12:36:52 by jbarbay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,16 @@
 #include <stdio.h>
 
 #define BUFFER_SIZE 1
-#define HEIGHT 480 * 2
-#define WIDTH 640 * 2
+#define HEIGHT 480
+#define WIDTH 640
 
 #include <fcntl.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <math.h>
-// #include <mlx.h>
-# include "../mlxopengl/mlx.h"
-// #include <X11/keysym.h>
+#include <mlx.h>
+// # include "../mlxopengl/mlx.h"
+#include <X11/keysym.h>
 #include "../libft/libft.h"
 #include "../libft/gnl/get_next_line.h"
 
@@ -39,28 +39,6 @@ typedef struct s_img
 	int		endian;
 	int		line_len;
 }	t_img;
-
-typedef struct s_game_data
-{
-	char	*north_path;
-	char	*south_path;
-	char	*west_path;
-	char	*east_path;
-	int		floor_color[3];
-	int		ceiling_color[3];
-	char	**map;
-	int		fd;
-	int		player_pos[2];
-	char	player_dir;
-	void	*mlx_ptr;
-	void	*win_ptr;
-	t_img	*north_text;
-	t_img	*south_text;
-	t_img	*east_text;
-	t_img	*west_text;
-	t_img	*screen;
-
-} t_game_data;
 
 typedef struct s_raycast
 {
@@ -83,7 +61,7 @@ typedef struct s_raycast
 	int			step_x;
 	int			step_y;
 	int			hit;
-	int			side; // NS hit (y-side): 1, EW wall hit (x-side): 0
+	int			side;
 	int			line_height;
 	int			line_start;
 	int			line_end;
@@ -92,6 +70,29 @@ typedef struct s_raycast
 	int			tex_y;
 	t_img		*text;
 } t_raycast;
+
+typedef struct s_game_data
+{
+	char	*north_path;
+	char	*south_path;
+	char	*west_path;
+	char	*east_path;
+	int		floor_color[3];
+	int		ceiling_color[3];
+	char	**map;
+	int		fd;
+	int		player_pos[2];
+	char	player_dir;
+	void	*mlx_ptr;
+	void	*win_ptr;
+	t_img	*north_text;
+	t_img	*south_text;
+	t_img	*east_text;
+	t_img	*west_text;
+	t_img	*screen;
+	t_raycast	*ray;
+
+} t_game_data;
 
 // Map validation and reading
 
@@ -131,8 +132,7 @@ int		open_file(char *filename);
 t_game_data	*initialize_data_args(int fd);
 void	error_parsing(char *message, char **array, char *line, t_game_data *data);
 void	check_cub_file(char *filename);
-void	check_xpm(char *filename, t_game_data *data);
-
+void	check_xpm(char *filename, t_game_data *data, char *line);
 
 // Raycasting
 void		raycasting(t_game_data *data);

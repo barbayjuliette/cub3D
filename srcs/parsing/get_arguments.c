@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_arguments.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbarbay <jbarbay@student.42singapore.sg    +#+  +:+       +#+        */
+/*   By: jbarbay <jbarbay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 18:09:13 by jbarbay           #+#    #+#             */
-/*   Updated: 2024/04/24 18:20:00 by jbarbay          ###   ########.fr       */
+/*   Updated: 2024/04/25 12:47:07 by jbarbay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,6 @@ void	check_identifier(t_game_data *data, char **args, char *line)
 		error_parsing("Only provide requested arguments", args, line, data);
 }
 
-
-
 void	get_textures_and_colors(t_game_data *data)
 {
 	char		*line;
@@ -100,9 +98,9 @@ void	get_textures_and_colors(t_game_data *data)
 		check_identifier(data, args, line);
 		line = prepare_next_iteration(line, args, data->fd, 0);
 	}
-	check_xpm(data->north_path, data);
-	check_xpm(data->south_path, data);
-	check_xpm(data->west_path, data);
-	check_xpm(data->east_path, data);
+	check_xpm(data->north_path, data, line);
+	check_xpm(data->south_path, data, line);
+	check_xpm(data->west_path, data, line);
+	check_xpm(data->east_path, data, line);
 	free(line);
 }
