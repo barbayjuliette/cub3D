@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validation_helpers.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbarbay <jbarbay@student.42singapore.sg    +#+  +:+       +#+        */
+/*   By: jbarbay <jbarbay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 14:32:43 by jbarbay           #+#    #+#             */
-/*   Updated: 2024/04/24 18:19:31 by jbarbay          ###   ########.fr       */
+/*   Updated: 2024/04/25 14:49:09 by jbarbay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ t_game_data	*initialize_data_args(int fd)
 	t_game_data	*data;
 
 	data = (t_game_data *)malloc(sizeof(t_game_data));
+	if (!data)
+		error_parsing("Memory allocation error", NULL, NULL, NULL);
 	data->north_path = NULL;
 	data->south_path = NULL;
 	data->west_path = NULL;
@@ -30,6 +32,9 @@ t_game_data	*initialize_data_args(int fd)
 	data->west_text = NULL;
 	data->east_text = NULL;
 	data->mlx_ptr = NULL;
+	data->win_ptr = NULL;
+	data->ray = NULL;
+	data->screen = NULL;
 	return (data);
 }
 
@@ -56,26 +61,17 @@ void	error_parsing(char *message, char **array, char *line, t_game_data *data)
 	exit(1);
 }
 
-void	check_cub_file(char *filename)
+void	check_extension(char *file, char *line, t_game_data *data, char *ext)
 {
 	int	length;
 	int	result;
 
-	length = ft_strlen(filename);
-	filename += (length - 4);
-	result = ft_strncmp(filename, ".cub", 4);
-	if (result != 0)
-		error_parsing("Please provide all the arguments in a .ber file", NULL, NULL, NULL);
+	length = ft_strlen(file);
+	file += (length - 4);
+	result = ft_strncmp(file, ext, 4);
+	if (result != 0 && ext[1] == 'x')
+		error_parsing("Please provide textures in XPM format", NULL, line, data);
+	else if (result != 0)
+		error_parsing("Please provide the map in a .cub file", NULL, line, data);
 }
 
-void	check_xpm(char *filename, t_game_data *data)
-{
-	int	length;
-	int	result;
-
-	length = ft_strlen(filename);
-	filename += (length - 4);
-	result = ft_strncmp(filename, ".xpm", 4);
-	if (result != 0)
-		error_parsing("Please provide textures in XPM format", NULL, NULL, data);
-}
