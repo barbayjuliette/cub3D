@@ -6,7 +6,7 @@
 /*   By: jbarbay <jbarbay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 12:10:03 by jbarbay           #+#    #+#             */
-/*   Updated: 2024/04/25 13:10:15 by jbarbay          ###   ########.fr       */
+/*   Updated: 2024/04/25 15:00:05 by jbarbay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ typedef struct s_img
 	int		height;
 	int		width;
 	int		bpp;
-	int		endian;
-	int		line_len;
+	int		ed;
+	int		len;
 }	t_img;
 
 typedef struct s_raycast
@@ -127,13 +127,11 @@ void	check_args(int argc);
 void	print_map(char **map);
 void	free_data(t_game_data *data);
 int		open_file(char *filename);
-void	malloc_error(t_game_data *data);
 
 // Validation helpers
 t_game_data	*initialize_data_args(int fd);
 void	error_parsing(char *message, char **array, char *line, t_game_data *data);
-void	check_cub_file(char *filename);
-void	check_xpm(char *filename, t_game_data *data, char *line);
+void	check_extension(char *file, char *line, t_game_data *data, char *ext);
 
 // Raycasting
 void		raycasting(t_game_data *data);
@@ -141,13 +139,11 @@ t_raycast	*initialize_raycasting_data(t_game_data *data);
 void		choose_texture(t_game_data *data, t_raycast *ray);
 void		calculate_vars(t_raycast *ray, int x);
 
-
 // Colors
 int		create_trgb(int t, int r, int g, int b);
 void	draw_line(t_game_data *data, t_raycast *ray, int x);
 void	draw_ceiling(t_game_data *data, t_raycast *ray, int x);
 void	draw_floor(t_game_data *data, t_raycast *ray, int x);
-
 
 // Calculations
 void	calculate_steps(t_raycast *ray);
@@ -155,4 +151,12 @@ void	wall_hit(t_game_data *data, t_raycast *ray);
 void	calculate_ray(t_raycast *ray);
 void	get_pixel_texture(t_raycast *ray);
 void	calculate_line(t_raycast *ray);
+
+// End game
+void	free_textures(t_game_data *data);
+int		exit_program(t_game_data *data);
+void	malloc_error(t_game_data *data);
+void	error_image(t_game_data *data, char *dir, t_img *texture);
+
+
 #endif

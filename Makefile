@@ -6,7 +6,7 @@
 #    By: jbarbay <jbarbay@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/27 15:11:22 by jbarbay           #+#    #+#              #
-#    Updated: 2024/04/25 11:59:56 by jbarbay          ###   ########.fr        #
+#    Updated: 2024/04/25 14:54:21 by jbarbay          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -73,6 +73,7 @@ SRCS =  srcs/cub3D.c \
 		srcs/raycasting/raycasting.c \
 		srcs/raycasting/draw.c \
 		srcs/raycasting/calculations.c \
+		srcs/end_cub.c \
 
 CC = cc -g
 CFLAGS = -Wall -Wextra -Werror

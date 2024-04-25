@@ -6,7 +6,7 @@
 /*   By: jbarbay <jbarbay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 12:08:26 by jbarbay           #+#    #+#             */
-/*   Updated: 2024/04/25 13:03:38 by jbarbay          ###   ########.fr       */
+/*   Updated: 2024/04/25 14:59:17 by jbarbay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,51 +25,6 @@ void	test_helper(t_game_data *data)
 	print_map(data->map);
 }
 
-void	free_textures(t_game_data *data)
-{
-	if (data->north_text)
-	{
-		mlx_destroy_image(data->mlx_ptr, data->north_text->img_ptr);
-		free(data->north_text);
-	}
-	if (data->south_text)
-	{
-		mlx_destroy_image(data->mlx_ptr, data->south_text->img_ptr);
-		free(data->south_text);
-	}
-	if (data->west_text)
-	{
-		mlx_destroy_image(data->mlx_ptr, data->west_text->img_ptr);
-		free(data->west_text);
-	}
-	if (data->east_text)
-	{
-		mlx_destroy_image(data->mlx_ptr, data->east_text->img_ptr);
-		free(data->east_text);
-	}
-}
-
-int	exit_program(t_game_data *data)
-{
-	free_textures(data);
-	if (data->ray)
-		free(data->ray);
-	if (data->screen)
-	{
-		mlx_destroy_image(data->mlx_ptr, data->screen->img_ptr);
-		free(data->screen);
-	}
-	if (data->win_ptr)
-		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
-	if (data->mlx_ptr)
-	{
-		mlx_destroy_display(data->mlx_ptr);
-		free(data->mlx_ptr);
-	}
-	free_data(data);
-	exit(0);
-}
-
 int	handle_input(int keysym, t_game_data *data)
 {
 	if (keysym == XK_Escape)
@@ -80,35 +35,18 @@ int	handle_input(int keysym, t_game_data *data)
 	return (0);
 }
 
-
-void	error_image(t_game_data *data, char *dir, t_img *texture)
-{
-	ft_putstr_fd("Error\n", 1);
-	ft_putstr_fd("Could not load ", 1);
-	ft_putstr_fd(dir, 1);
-	ft_putendl_fd(" texture. Please provide a valid path", 1);
-	free(texture);
-	exit_program(data);
-}
-
 t_img	*create_img(t_game_data *data, char *path, char *dir)
 {
-	t_img	*texture;
+	t_img	*img;
 
-	texture = malloc(sizeof(t_img));
-	if (!texture)
+	img = malloc(sizeof(t_img));
+	if (!img)
 		malloc_error(data);
-	texture->img_ptr = mlx_xpm_file_to_image(data->mlx_ptr, path, &(texture->width), &(texture->height));
-	if (texture->img_ptr == NULL)
-		error_image(data, dir, texture);
-	texture->addr = (int *)mlx_get_data_addr(texture->img_ptr, &(texture->bpp), &(texture->line_len), &(texture->endian));
-	return (texture);
-}
-
-void	malloc_error(t_game_data *data)
-{
-	ft_putstr_fd("Memory allocation error\n", 1);
-	exit_program(data);
+	img->img_ptr = mlx_xpm_file_to_image(data->mlx_ptr, path, &(img->width), &(img->height));
+	if (img->img_ptr == NULL)
+		error_image(data, dir, img);
+	img->addr = (int *)mlx_get_data_addr(img->img_ptr, &(img->bpp), &(img->len), &(img->ed));
+	return (img);
 }
 
 void	create_textures(t_game_data *data)
@@ -125,7 +63,7 @@ void	create_textures(t_game_data *data)
 	if (!screen)
 		malloc_error(data);
 	screen->img_ptr = mlx_new_image(data->mlx_ptr, WIDTH, HEIGHT);
-	screen->addr = (int *)mlx_get_data_addr(screen->img_ptr, &(screen->bpp), &(screen->line_len), &(screen->endian));
+	screen->addr = (int *)mlx_get_data_addr(screen->img_ptr, &(screen->bpp), &(screen->len), &(screen->ed));
 	data->screen = screen;
 }
 
@@ -151,7 +89,7 @@ int	main(int argc, char *argv[])
 	t_game_data	*data;
 	int			total_rows;
 
-	check_cub_file(argv[1]);
+	check_extension(argv[1], NULL, NULL, ".cub");
 	fd = open_file(argv[1]);
 	data = initialize_data_args(fd);
 	check_args(argc);
