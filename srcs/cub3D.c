@@ -27,10 +27,31 @@ void	test_helper(t_game_data *data)
 
 int	handle_input(int keysym, t_game_data *data)
 {
+	//printf("%d\n", keysym);
 	if (keysym == XK_Escape)
 	{
 		write(1, "Giving up so fast?\n", 19);
 		exit_program(data);
+	}
+	else if (keysym == ARROW_UP || keysym == KEY_W)
+	{
+		data->flag = 0;
+		rerender(data);
+	}
+	else if (keysym == ARROW_DOWN || keysym == KEY_S)
+	{
+		data->flag = 1;
+		rerender(data);
+	}
+	else if (keysym == ARROW_LEFT || keysym == KEY_A)
+	{
+		data->flag = 2;
+		rerender(data);
+	}
+	else if (keysym == ARROW_RIGHT || keysym == KEY_D)
+	{
+		data->flag = 3;
+		rerender(data);
 	}
 	return (0);
 }
