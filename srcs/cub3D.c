@@ -98,7 +98,7 @@ void	start_cub(t_game_data *data)
 	if (!data->win_ptr)
 		malloc_error(data);
 	mlx_hook(data->win_ptr, 17, 0, exit_program, data);
-	mlx_key_hook(data->win_ptr, handle_input, data);
+	mlx_hook(data->win_ptr, 2, 1L<<0, handle_input, data);
 	raycasting(data);
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->screen->img_ptr, 0, 0);
 	mlx_loop(data->mlx_ptr);

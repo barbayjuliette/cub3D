@@ -8,21 +8,21 @@ t_raycast	*recalculate_raycasting_data(t_game_data *data)
 	if (!ray)
 		malloc_error(data);
 	ray = data->ray;
-	int moveSpeed = 1;
+	double moveSpeed = 0.1;
 	if (data->flag == 0)
 	{
-			ray->position_x += ray->direction_x  * moveSpeed;
-			ray->position_y += ray->direction_y * moveSpeed;
+		ray->position_x += ray->direction_x * moveSpeed;
+		ray->position_y += ray->direction_y * moveSpeed;
 	}
 	
 	if (data->flag == 1)
 	{
 		ray->position_x -= ray->direction_x * moveSpeed;
-		ray->position_y -= ray->direction_y* moveSpeed;
+		ray->position_y -= ray->direction_y * moveSpeed;
 	}
 	if (data->flag == 3)
 	{
-		int rotSpeed = 1;
+		double rotSpeed = 0.1;
 		double oldDirX = ray->direction_x;
      	ray->direction_x = ray->direction_x * cos(rotSpeed) - ray->direction_y * sin(rotSpeed);
       	ray->direction_y = oldDirX * sin(rotSpeed) + ray->direction_y * cos(rotSpeed);
@@ -32,7 +32,7 @@ t_raycast	*recalculate_raycasting_data(t_game_data *data)
 	}
 	if (data->flag == 2)
 	{
-		int rotSpeed = 1;
+		double rotSpeed = 0.1;
 		double oldDirX = ray->direction_x;
      	ray->direction_x = ray->direction_x * cos(-rotSpeed) - ray->direction_y * sin(-rotSpeed);
       	ray->direction_y = oldDirX * sin(-rotSpeed) + ray->direction_y * cos(-rotSpeed);
@@ -70,7 +70,12 @@ void	reraycasting(t_game_data *data)
 int	rerender(t_game_data *data)
 {
 	mlx_destroy_image(data->mlx_ptr, data->screen->img_ptr);
-	mlx_clear_window(data->mlx_ptr, data->win_ptr);
+
+	// mlx_clear_window(data->mlx_ptr, data->win_ptr);
+	free(data->screen);
+	data->screen = malloc(sizeof(t_img));
+	if (!data->screen)
+		malloc_error(data);
 	data->screen->img_ptr = mlx_new_image(data->mlx_ptr, WIDTH, HEIGHT);
 	data->screen->addr = (int *)mlx_get_data_addr(data->screen->img_ptr, &(data->screen->bpp), &(data->screen->len), &(data->screen->ed));
 	reraycasting(data);
