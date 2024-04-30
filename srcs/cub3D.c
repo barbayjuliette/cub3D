@@ -6,7 +6,7 @@
 /*   By: jbarbay <jbarbay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 12:08:26 by jbarbay           #+#    #+#             */
-/*   Updated: 2024/04/25 14:59:17 by jbarbay          ###   ########.fr       */
+/*   Updated: 2024/04/29 14:02:05 by jbarbay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,10 +89,10 @@ int	main(int argc, char *argv[])
 	t_game_data	*data;
 	int			total_rows;
 
+	check_args(argc);
 	check_extension(argv[1], NULL, NULL, ".cub");
 	fd = open_file(argv[1]);
 	data = initialize_data_args(fd);
-	check_args(argc);
 	get_textures_and_colors(data);
 	total_rows = get_map(data);
 	validate_map(data, total_rows);
