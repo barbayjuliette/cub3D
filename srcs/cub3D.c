@@ -27,32 +27,23 @@ void	test_helper(t_game_data *data)
 
 int	handle_input(int keysym, t_game_data *data)
 {
-	//printf("%d\n", keysym);
 	if (keysym == XK_Escape)
 	{
 		write(1, "Giving up so fast?\n", 19);
 		exit_program(data);
 	}
 	else if (keysym == ARROW_UP || keysym == KEY_W)
-	{
-		data->flag = 0;
-		rerender(data);
-	}
+		rerender(data, 0);
 	else if (keysym == ARROW_DOWN || keysym == KEY_S)
-	{
-		data->flag = 1;
-		rerender(data);
-	}
-	else if (keysym == ARROW_LEFT || keysym == KEY_A)
-	{
-		data->flag = 2;
-		rerender(data);
-	}
-	else if (keysym == ARROW_RIGHT || keysym == KEY_D)
-	{
-		data->flag = 3;
-		rerender(data);
-	}
+		rerender(data, 1);
+	else if (keysym == ARROW_LEFT)
+		rerender(data, 2);
+	else if (keysym == ARROW_RIGHT)
+		rerender(data, 3);
+	else if (keysym == KEY_A)
+		rerender(data, 4);
+	else if (keysym == KEY_D)
+		rerender(data, 5);
 	return (0);
 }
 
@@ -98,7 +89,7 @@ void	start_cub(t_game_data *data)
 	if (!data->win_ptr)
 		malloc_error(data);
 	mlx_hook(data->win_ptr, 17, 0, exit_program, data);
-	mlx_key_hook(data->win_ptr, handle_input, data);
+	mlx_hook(data->win_ptr, 2, 1L<<0, handle_input, data);
 	raycasting(data);
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->screen->img_ptr, 0, 0);
 	mlx_loop(data->mlx_ptr);
