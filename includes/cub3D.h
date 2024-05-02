@@ -18,6 +18,14 @@
 #define BUFFER_SIZE 1
 #define HEIGHT 480
 #define WIDTH 640
+#define ARROW_UP	65362
+#define ARROW_DOWN	65364
+#define ARROW_LEFT	65361
+#define ARROW_RIGHT	65363
+#define KEY_W		119
+#define KEY_A		97
+#define KEY_S		115
+#define KEY_D		100
 
 #include <fcntl.h>
 #include <stdlib.h>
@@ -85,6 +93,7 @@ typedef struct s_game_data
 	char	player_dir;
 	void	*mlx_ptr;
 	void	*win_ptr;
+	int flag;
 	t_img	*north_text;
 	t_img	*south_text;
 	t_img	*east_text;
@@ -158,5 +167,9 @@ int		exit_program(t_game_data *data);
 void	malloc_error(t_game_data *data);
 void	error_image(t_game_data *data, char *dir, t_img *texture);
 
+// Actions
+int	rerender(t_game_data *data);
+void	reraycasting(t_game_data *data);
+t_raycast	*recalculate_raycasting_data(t_game_data *data);
 
 #endif

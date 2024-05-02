@@ -73,6 +73,7 @@ SRCS =  srcs/cub3D.c \
 		srcs/raycasting/raycasting.c \
 		srcs/raycasting/draw.c \
 		srcs/raycasting/calculations.c \
+		srcs/actions/rerender.c \
 		srcs/end_cub.c \
 
 CC = cc -g
