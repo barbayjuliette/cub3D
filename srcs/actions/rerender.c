@@ -61,7 +61,11 @@ void	reraycasting(t_game_data *data, int mode)
 int	rerender(t_game_data *data, int mode)
 {
 	mlx_destroy_image(data->mlx_ptr, data->screen->img_ptr);
-	//mlx_clear_window(data->mlx_ptr, data->win_ptr);
+	// mlx_clear_window(data->mlx_ptr, data->win_ptr);
+	free(data->screen);
+	data->screen = malloc(sizeof(t_img));
+	if (!data->screen)
+		malloc_error(data);
 	data->screen->img_ptr = mlx_new_image(data->mlx_ptr, WIDTH, HEIGHT);
 	data->screen->addr = (int *)mlx_get_data_addr(data->screen->img_ptr, &(data->screen->bpp), &(data->screen->len), &(data->screen->ed));
 	reraycasting(data, mode);
