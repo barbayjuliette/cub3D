@@ -93,7 +93,7 @@ typedef struct s_game_data
 	char	player_dir;
 	void	*mlx_ptr;
 	void	*win_ptr;
-	int flag;
+	double speed;
 	t_img	*north_text;
 	t_img	*south_text;
 	t_img	*east_text;

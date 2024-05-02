@@ -22,18 +22,14 @@ t_raycast	*move_forward(t_game_data *data)
 	if (!ray)
 		malloc_error(data);
 	ray = data->ray;
-	//int oldx = ray->position_x;
-	//int oldy = ray->position_y;
-	x = ray->position_x + ray->direction_x;
-	y = ray->position_y + ray->direction_y;
-	//printf("current x: %d\n", oldx);
-	//printf("current y: %d\n", oldy);
-	//printf("new x: %d\n", x);
-	//printf("new y: %d\n", y);
-	if(data->map[y][x] && data->map[y][x] != '1')
+	x = ray->position_x + (1 + (data->speed < 0.5)) * \
+		ray->direction_x * data->speed;
+	y = ray->position_y + (1 + (data->speed < 0.5)) * \
+		ray->direction_y * data->speed;
+	if (data->map[y][x] && data->map[y][x] != '1')
 	{
-		ray->position_x += ray->direction_x;
-		ray->position_y += ray->direction_y;
+		ray->position_x += ray->direction_x * data->speed;
+		ray->position_y += ray->direction_y * data->speed;
 	}
 	else
 		printf("You are facing a wall. Try to move/rotate\n");
@@ -50,18 +46,14 @@ t_raycast	*move_back(t_game_data *data)
 	if (!ray)
 		malloc_error(data);
 	ray = data->ray;
-	//int oldx = ray->position_x;
-	//int oldy = ray->position_y;
-	x = ray->position_x - ray->direction_x;
-	y = ray->position_y - ray->direction_y;
-	//printf("current x: %d\n", oldx);
-	//printf("current y: %d\n", oldy);
-	//printf("new x: %d\n", x);
-	//printf("new y: %d\n", y);
+	x = ray->position_x - (1 + (data->speed < 0.5)) * \
+		ray->direction_x * data->speed;
+	y = ray->position_y - (1 + (data->speed < 0.5)) * \
+		ray->direction_y * data->speed;
 	if(data->map[y][x] && data->map[y][x] != '1')
 	{
-		ray->position_x -= ray->direction_x;
-		ray->position_y -= ray->direction_y;
+		ray->position_x -= ray->direction_x * data->speed;
+		ray->position_y -= ray->direction_y * data->speed;
 	}
 	else
 		printf("You are facing a wall. Try to move/rotate\n");
@@ -78,18 +70,16 @@ t_raycast	*move_left(t_game_data *data)
 	if (!ray)
 		malloc_error(data);
 	ray = data->ray;
-	//int oldx = ray->position_x;
-	//int oldy = ray->position_y;
-	x = ray->position_x + ray->direction_y;
-	y = ray->position_y - ray->direction_x;
-	//printf("current x: %d\n", oldx);
-	//printf("current y: %d\n", oldy);
-	//printf("new x: %d\n", x);
-	//printf("new y: %d\n", y);
+	int oldx = ray->position_x;
+	int oldy = ray->position_y;
+	x = ray->position_x + (1 + (data->speed < 0.5)) * \
+		ray->direction_y * data->speed;
+	y = ray->position_y - (1 + (data->speed < 0.5)) * \
+		ray->direction_x * data->speed;
 	if(data->map[y][x] && data->map[y][x] != '1')
 	{
-		ray->position_x += ray->direction_y;
-		ray->position_y -= ray->direction_x;
+		ray->position_x += ray->direction_y * data->speed;
+		ray->position_y -= ray->direction_x * data->speed;
 	}
 	else
 		printf("You are facing a wall. Try to move/rotate\n");
@@ -106,18 +96,14 @@ t_raycast	*move_right(t_game_data *data)
 	if (!ray)
 		malloc_error(data);
 	ray = data->ray;
-	//int oldx = ray->position_x;
-	//int oldy = ray->position_y;
-	x = ray->position_x - ray->direction_y;
-	y = ray->position_y + ray->direction_x;
-	//printf("current x: %d\n", oldx);
-	//printf("current y: %d\n", oldy);
-	//printf("new x: %d\n", x);
-	//printf("new y: %d\n", y);
+	x = ray->position_x - (1 + (data->speed < 0.5)) * \
+		ray->direction_y * data->speed;
+	y = ray->position_y + (1 + (data->speed < 0.5)) * \
+		ray->direction_x * data->speed;
 	if(data->map[y][x] && data->map[y][x] != '1')
 	{
-		ray->position_x -= ray->direction_y;
-		ray->position_y += ray->direction_x;
+		ray->position_x -= ray->direction_y * data->speed;
+		ray->position_y += ray->direction_x * data->speed;
 	}
 	else
 		printf("You are facing a wall. Try to move/rotate\n");
