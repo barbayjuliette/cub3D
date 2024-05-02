@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   rerender.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: akolgano <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/29 16:02:49 by akolgano          #+#    #+#             */
+/*   Updated: 2024/04/29 16:02:51 by akolgano         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/cub3D.h"
 
-t_raycast	*recalculate_raycasting_data(t_game_data *data)
+t_raycast	*recalculate_raycasting_data(t_game_data *data, int mode)
 {
 	t_raycast	*ray;
 
@@ -8,49 +20,28 @@ t_raycast	*recalculate_raycasting_data(t_game_data *data)
 	if (!ray)
 		malloc_error(data);
 	ray = data->ray;
-	double moveSpeed = 0.1;
-	if (data->flag == 0)
-	{
-		ray->position_x += ray->direction_x * moveSpeed;
-		ray->position_y += ray->direction_y * moveSpeed;
-	}
-	
-	if (data->flag == 1)
-	{
-		ray->position_x -= ray->direction_x * moveSpeed;
-		ray->position_y -= ray->direction_y * moveSpeed;
-	}
-	if (data->flag == 3)
-	{
-		double rotSpeed = 0.1;
-		double oldDirX = ray->direction_x;
-     	ray->direction_x = ray->direction_x * cos(rotSpeed) - ray->direction_y * sin(rotSpeed);
-      	ray->direction_y = oldDirX * sin(rotSpeed) + ray->direction_y * cos(rotSpeed);
-      	double oldPlaneX = ray->camera_plane_x ;
-      	ray->camera_plane_x = ray->camera_plane_x * cos(rotSpeed) - ray->camera_plane_y * sin(rotSpeed);
-      	ray->camera_plane_y = oldPlaneX * sin(rotSpeed) + ray->camera_plane_y * cos(rotSpeed);
-	}
-	if (data->flag == 2)
-	{
-		double rotSpeed = 0.1;
-		double oldDirX = ray->direction_x;
-     	ray->direction_x = ray->direction_x * cos(-rotSpeed) - ray->direction_y * sin(-rotSpeed);
-      	ray->direction_y = oldDirX * sin(-rotSpeed) + ray->direction_y * cos(-rotSpeed);
-      	double oldPlaneX = ray->camera_plane_x ;
-      	ray->camera_plane_x = ray->camera_plane_x * cos(-rotSpeed) - ray->camera_plane_y * sin(-rotSpeed);
-      	ray->camera_plane_y = oldPlaneX * sin(-rotSpeed) + ray->camera_plane_y * cos(-rotSpeed);
-	}
-	//data->flag == 99;
+	if (mode == 0)		
+		return (move_forward(data));
+	else if (mode == 1)
+		return (move_back(data));
+	else if (mode == 3)
+		return (rotate_right(data));
+	else if (mode == 2)
+		return (rotate_left(data));
+	else if (mode == 4)
+		return (move_left(data));
+	else if (mode == 5)
+		return (move_right(data));
 	return (ray);
 }
 
-void	reraycasting(t_game_data *data)
+void	reraycasting(t_game_data *data, int mode)
 {
 	t_raycast	*ray;
 	int			x;
 
 	x = 0;
-	ray = recalculate_raycasting_data(data);
+	ray = recalculate_raycasting_data(data, mode);
 	while (x < WIDTH)
 	{
 		calculate_vars(ray, x);
@@ -67,18 +58,13 @@ void	reraycasting(t_game_data *data)
 		x++;
 	}
 }
-int	rerender(t_game_data *data)
+int	rerender(t_game_data *data, int mode)
 {
 	mlx_destroy_image(data->mlx_ptr, data->screen->img_ptr);
-
-	// mlx_clear_window(data->mlx_ptr, data->win_ptr);
-	free(data->screen);
-	data->screen = malloc(sizeof(t_img));
-	if (!data->screen)
-		malloc_error(data);
+	//mlx_clear_window(data->mlx_ptr, data->win_ptr);
 	data->screen->img_ptr = mlx_new_image(data->mlx_ptr, WIDTH, HEIGHT);
 	data->screen->addr = (int *)mlx_get_data_addr(data->screen->img_ptr, &(data->screen->bpp), &(data->screen->len), &(data->screen->ed));
-	reraycasting(data);
+	reraycasting(data, mode);
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->screen->img_ptr, 0, 0);
 	return (0);
 }
