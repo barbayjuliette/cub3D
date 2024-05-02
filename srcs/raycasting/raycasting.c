@@ -14,8 +14,10 @@
 
 // Make sure the camera plane is perpendicular to the direction,
 // but you can change the length of it.
-// The ratio between the length of the direction and the camera plane determinates the FOV.
-// Here the direction vector is a bit longer than the camera plane, so the FOV will be smaller than 90°
+// The ratio between the length of the direction and 
+// the camera plane determinates the FOV.
+// Here the direction vector is a bit longer than the camera plane, 
+// so the FOV will be smaller than 90°
 
 t_raycast	*initialize_raycasting_data(t_game_data *data)
 {
@@ -27,34 +29,8 @@ t_raycast	*initialize_raycasting_data(t_game_data *data)
 	data->ray = ray;
 	ray->position_x = data->player_pos[0] + 0.5;
 	ray->position_y = data->player_pos[1] + 0.5;
-	if (data->player_dir == 'N')
-	{
-		ray->direction_x = 0;
-		ray->direction_y = -1;
-		ray->camera_plane_x = 0.66;
-		ray->camera_plane_y = 0;
-	}
-	if (data->player_dir == 'S')
-	{
-		ray->direction_x = 0;
-		ray->direction_y = 1;
-		ray->camera_plane_x = -0.66;
-		ray->camera_plane_y = 0;
-	}
-	if (data->player_dir == 'W')
-	{
-		ray->direction_x = -1;
-		ray->direction_y = 0;
-		ray->camera_plane_x = 0;
-		ray->camera_plane_y = -0.66;
-	}
-	if (data->player_dir == 'E')
-	{
-		ray->direction_x = 1;
-		ray->direction_y = 0;
-		ray->camera_plane_x = 0;
-		ray->camera_plane_y = 0.66;
-	}
+	position_west_east(ray, data);
+	position_north_south(ray, data);
 	return (ray);
 }
 
@@ -78,7 +54,8 @@ void	calculate_vars(t_raycast *ray, int x)
 		ray->delta_dist_y = fabs(1 / ray->ray_dir_y);
 }
 
-// We check the coordinate of the player against the coordinate where the wall was hit.
+// We check the coordinate of the player against 
+// the coordinate where the wall was hit.
 
 void	choose_texture(t_game_data *data, t_raycast *ray)
 {

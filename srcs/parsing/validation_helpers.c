@@ -86,7 +86,7 @@ void	check_args(int argc)
 	}
 	else if (argc > 2)
 	{
-		ft_putemdl_fd("Error\nPlease only provide the map", 1);
+		ft_putendl_fd("Error\nPlease only provide the map", 1);
 		exit(1);
 	}
 }

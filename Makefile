@@ -71,6 +71,7 @@ SRCS =  srcs/cub3D.c \
 		srcs/parsing/utils.c \
 		srcs/parsing/quoted_path.c \
 		srcs/raycasting/raycasting.c \
+		srcs/raycasting/raycasting_helpers.c \
 		srcs/raycasting/draw.c \
 		srcs/raycasting/calculations.c \
 		srcs/actions/rerender.c \

@@ -32,7 +32,7 @@ void	calculate_steps(t_raycast *ray)
 	else
 	{
 		ray->step_y = 1;
-		ray->side_dist_y = (ray->map_y + 1.0 - ray->position_y) *ray->delta_dist_y;
+		ray->side_dist_y = (ray->map_y + 1.0 - ray->position_y) * ray->delta_dist_y;
 	}
 }
 
@@ -59,22 +59,23 @@ void	wall_hit(t_game_data *data, t_raycast *ray)
 			ray->map_y += ray->step_y;
 			ray->side = 1;
 		}
-		if(data->map[ray->map_y][ray->map_x] == '1')
+		if (data->map[ray->map_y][ray->map_x] == '1')
 			ray->hit = 1;
 	}
 }
 
 // Calculate the distance to the wall, using fisheye correction
 // Store which side of the wall was hit
-// The value wall_X represents the exact value where the wall was hit, not just the integer coordinates of the wall.
+// The value wall_x represents the exact value where the wall was hit, 
+// not just the integer coordinates of the wall.
 // If side == 1, it is a y-coordinate, if side == 0, it is an x-coordinate
-// But it is always an x-coordinate for the texture, becasue we do vertical lines
+// But it is always an x-coordinate for the texture, because vertical lines
 // This is required to know which x-coordinate of the texture we have to use.
-// We get 5.34 --> 0.34 to have where on the image. So we know which pixel of the image to render.
+// We get 5.34 --> 0.34 to have where on the image.
+// So we know which pixel of the image to render.
 
 void	calculate_ray(t_raycast *ray)
 {
-
 	if (ray->side == 0)
 	{
 		ray->perp_wall_dist = ray->side_dist_x - ray->delta_dist_x;
@@ -88,12 +89,14 @@ void	calculate_ray(t_raycast *ray)
 	ray->wall_x -= floor(ray->wall_x);
 }
 
-// tex_x refers to the x coordinate on the texture. For one line, tex_x is constant.
+// tex_x refers to the x coordinate on the texture.
+// For one line, tex_x is constant.
 
-// Now that we know the x-coordinate of the texture, we know that this coordinate will remain the same,
+// Now that we know the x-coord of the texture,
+// we know that this coordinate will remain the same,
 // because we stay in the same vertical stripe of the screen.
-// Now we need a loop in the y-direction to give each pixel of the vertical stripe the correct y-coordinate of the texture,
-//  called texY.
+// Now we need a loop in the y-direction to give each pixel of
+// the vertical stripe the correct y-coordinate of the texture, called tex_y
 
 void	get_pixel_texture(t_raycast *ray)
 {
@@ -107,12 +110,11 @@ void	get_pixel_texture(t_raycast *ray)
 
 void	calculate_line(t_raycast *ray)
 {
-	ray->line_height = (int)(HEIGHT / ray->perp_wall_dist);
-	ray->line_start = (-ray->line_height / 2) + (HEIGHT / 2);
+	ray->line_h = (int)(HEIGHT / ray->perp_wall_dist);
+	ray->line_start = (-ray->line_h / 2) + (HEIGHT / 2);
 	if (ray->line_start < 0)
 		ray->line_start = 0;
-	ray->line_end = (ray->line_height / 2) + (HEIGHT / 2);
-	// ray->line_end = ray->line_start + ray->line_height;
+	ray->line_end = (ray->line_h / 2) + (HEIGHT / 2);
 	if (ray->line_end > HEIGHT)
 		ray->line_end = HEIGHT - 1;
 }
