@@ -1,4 +1,4 @@
-NO  ./textures/purplestone.xpm
+NO ./textures/purplestone.xpm
 SO    ./textures/bluestone.xpm
 WE     ./textures/mossy.xpm
 EA     "./textures/eagle.xpm"
@@ -11,8 +11,8 @@ C  124,185,232
 11011000000001
 11000000111101
 10000000000011
-1000000N000001
-100000000000001
+1000000000001
+100000000000011
 11000000000001
 10000000000001
 10000000000001

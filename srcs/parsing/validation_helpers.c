@@ -38,12 +38,12 @@ t_game_data	*initialize_data_args(int fd)
 	return (data);
 }
 
-void	error_parsing(char *message, char **array, char *line, t_game_data *data)
+void	error_parsing(char *msg, char **array, char *line, t_game_data *data)
 {
-	if (message)
+	if (msg)
 	{
 		ft_putendl_fd("Error", 1);
-		ft_putendl_fd(message, 1);
+		ft_putendl_fd(msg, 1);
 	}
 	if (array)
 		free_array(array);
@@ -70,8 +70,38 @@ void	check_extension(char *file, char *line, t_game_data *data, char *ext)
 	file += (length - 4);
 	result = ft_strncmp(file, ext, 4);
 	if (result != 0 && ext[1] == 'x')
-		error_parsing("Please provide textures in XPM format", NULL, line, data);
+		error_parsing("Please provide textures in XPM format",
+			NULL, line, data);
 	else if (result != 0)
-		error_parsing("Please provide the map in a .cub file", NULL, line, data);
+		error_parsing("Please provide the map in a .cub file",
+			NULL, line, data);
 }
 
+void	check_args(int argc)
+{
+	if (argc < 2)
+	{
+		ft_putendl_fd("Error\nPlease provide a map in format in format .cub", 1);
+		exit(1);
+	}
+	else if (argc > 2)
+	{
+		ft_putemdl_fd("Error\nPlease only provide the map", 1);
+		exit(1);
+	}
+}
+
+int	open_file(char *filename)
+{
+	int		fd;
+
+	fd = open(filename, O_RDONLY);
+	if (fd == -1)
+	{
+		ft_putendl_fd("Error", 1);
+		ft_putstr_fd("Could not open ", 1);
+		ft_putendl_fd(filename, 1);
+		exit(1);
+	}
+	return (fd);
+}

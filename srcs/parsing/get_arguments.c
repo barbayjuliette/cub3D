@@ -34,7 +34,7 @@ char	*prepare_next_iteration(char *line, char **args, int fd, int first)
 		free(line);
 		line = NULL;
 	}
-	line = get_next_line(fd); // HERE
+	line = get_next_line(fd);
 	if (line == NULL)
 		return (NULL);
 	if (ft_strncmp(line, "\n", 2) == 0)
@@ -58,9 +58,11 @@ void	check_errors_argument(char **args, char *line, t_game_data *data)
 	if (!ft_strncmp(args[0], "1", 1))
 		error_parsing("Provide all arguments before the map", args, line, data);
 	else if (len == 1 && args[0][0] != '\n')
-		error_parsing("No space between arguments\nPlease provide arguments as follow: NO ./path_to_the_north_texture", args, line, data);
+		error_parsing("No space between arguments\nPlease provide arguments as follow: \
+NO ./path_to_the_north_texture", args, line, data);
 	else if (len != 2 && args[0][0] != '\n' && is_quote(args) == 0)
-		error_parsing("Please provide arguments as follow 444: NO ./path_to_the_north_texture \nF 220,100,0", args, line, data);
+		error_parsing("Please provide arguments as follow: \
+NO ./path_to_the_north_texture \nF 220,100,0", args, line, data);
 }
 
 void	check_identifier(t_game_data *data, char **args, char *line)

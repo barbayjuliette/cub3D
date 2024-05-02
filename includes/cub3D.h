@@ -112,8 +112,7 @@ void	get_colors(int *colors, char **args, char *line, t_game_data *data);
 
 // Map validation
 void	check_walls(int i, int j, int total_rows, t_game_data *data);
-void	set_start_position(int	*pos, t_game_data *data, int i, int j);
-void	validate_map(t_game_data *data, int total_rows);
+void	validate_map(t_game_data *data, int total_rows, int i);
 char	**create_new_map(char **old_map, int total_rows, char *line, t_game_data *data);
 int		get_map(t_game_data *data);
 
@@ -132,15 +131,16 @@ char	**get_quoted_path(char *line, char **args);
 void	free_array(char **array);
 int		array_len(char **arr);
 char	*ft_strjoin_free(char *s1, char const *s2);
-void	check_args(int argc);
-void	print_map(char **map);
 void	free_data(t_game_data *data);
-int		open_file(char *filename);
+void	set_start_position(int	*pos, t_game_data *data, int i, int j);
+// void	print_map(char **map);
 
 // Validation helpers
 t_game_data	*initialize_data_args(int fd);
 void	error_parsing(char *message, char **array, char *line, t_game_data *data);
 void	check_extension(char *file, char *line, t_game_data *data, char *ext);
+int		open_file(char *filename);
+void	check_args(int argc);
 
 // Raycasting
 void		raycasting(t_game_data *data);

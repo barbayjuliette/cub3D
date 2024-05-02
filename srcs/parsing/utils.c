@@ -66,20 +66,6 @@ char	*ft_strjoin_free(char *s1, char const *s2)
 	return (string);
 }
 
-void	check_args(int argc)
-{
-	if (argc < 2)
-	{
-		ft_putstr_fd("Error\nPlease provide a map in format in format *.cub\n", 1);
-		exit(1);
-	}
-	else if (argc > 2)
-	{
-		ft_putstr_fd("Error\nPlease only provide the map\n", 1);
-		exit(1);
-	}
-}
-
 void	free_data(t_game_data *data)
 {
 	if (data->north_path)
@@ -96,29 +82,24 @@ void	free_data(t_game_data *data)
 	data = NULL;
 }
 
-void	print_map(char **map)
+void	set_start_position(int	*pos, t_game_data *data, int i, int j)
 {
-	int	i;
-
-	i = 0;
-	while (map[i])
-	{
-		ft_putendl_fd(map[i], 1);
-		i++;
-	}
+	if (*pos > 0)
+		error_parsing("Position only one starting player", NULL, NULL, data);
+	data->player_dir = data->map[i][j];
+	data->player_pos[0] = j;
+	data->player_pos[1] = i;
+	(*pos)++;
 }
 
-int	open_file(char *filename)
-{
-	int		fd;
+// void	print_map(char **map)
+// {
+// 	int	i;
 
-	fd = open(filename, O_RDONLY);
-	if (fd == -1)
-	{
-		ft_putendl_fd("Error", 1);
-		ft_putstr_fd("Could not open ", 1);
-		ft_putendl_fd(filename, 1);
-		exit(1);
-	}
-	return (fd);
-}
+// 	i = 0;
+// 	while (map[i])
+// 	{
+// 		ft_putendl_fd(map[i], 1);
+// 		i++;
+// 	}
+// }
