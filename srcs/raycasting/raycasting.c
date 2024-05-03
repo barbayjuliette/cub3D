@@ -6,7 +6,7 @@
 /*   By: jbarbay <jbarbay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 12:04:44 by jbarbay           #+#    #+#             */
-/*   Updated: 2024/04/25 13:09:30 by jbarbay          ###   ########.fr       */
+/*   Updated: 2024/05/03 12:31:12 by jbarbay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,19 +39,16 @@ void	calculate_vars(t_raycast *ray, int x)
 	ray->camera_x = 2 * x / (double)(WIDTH) - 1;
 	ray->ray_dir_x = ray->direction_x + ray->camera_plane_x * ray->camera_x;
 	ray->ray_dir_y = ray->direction_y + ray->camera_plane_y * ray->camera_x;
-
 	ray->map_x = (int)ray->position_x;
 	ray->map_y = (int)ray->position_y;
-
 	if (ray->ray_dir_x == 0)
-		ray->delta_dist_x = 1e30;
+		ray->d_dist_x = 1e30;
 	else
-		ray->delta_dist_x = fabs(1 / ray->ray_dir_x);
-
+		ray->d_dist_x = fabs(1 / ray->ray_dir_x);
 	if (ray->ray_dir_y == 0)
-		ray->delta_dist_y = 1e30;
+		ray->d_dist_y = 1e30;
 	else
-		ray->delta_dist_y = fabs(1 / ray->ray_dir_y);
+		ray->d_dist_y = fabs(1 / ray->ray_dir_y);
 }
 
 // We check the coordinate of the player against 

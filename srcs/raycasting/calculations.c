@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   calculations.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbarbay <jbarbay@student.42singapore.sg    +#+  +:+       +#+        */
+/*   By: jbarbay <jbarbay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:55:00 by jbarbay           #+#    #+#             */
-/*   Updated: 2024/04/24 18:08:21 by jbarbay          ###   ########.fr       */
+/*   Updated: 2024/05/03 12:31:12 by jbarbay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,22 +17,22 @@ void	calculate_steps(t_raycast *ray)
 	if (ray->ray_dir_x < 0)
 	{
 		ray->step_x = -1;
-		ray->side_dist_x = (ray->position_x - ray->map_x) * ray->delta_dist_x;
+		ray->side_dist_x = (ray->position_x - ray->map_x) * ray->d_dist_x;
 	}
 	else
 	{
 		ray->step_x = 1;
-		ray->side_dist_x = (ray->map_x + 1.0 - ray->position_x) * ray->delta_dist_x;
+		ray->side_dist_x = (ray->map_x + 1.0 - ray->position_x) * ray->d_dist_x;
 	}
 	if (ray->ray_dir_y < 0)
 	{
 		ray->step_y = -1;
-		ray->side_dist_y = (ray->position_y - ray->map_y) * ray->delta_dist_y;
+		ray->side_dist_y = (ray->position_y - ray->map_y) * ray->d_dist_y;
 	}
 	else
 	{
 		ray->step_y = 1;
-		ray->side_dist_y = (ray->map_y + 1.0 - ray->position_y) * ray->delta_dist_y;
+		ray->side_dist_y = (ray->map_y + 1.0 - ray->position_y) * ray->d_dist_y;
 	}
 }
 
@@ -49,13 +49,13 @@ void	wall_hit(t_game_data *data, t_raycast *ray)
 	{
 		if (ray->side_dist_x < ray->side_dist_y)
 		{
-			ray->side_dist_x += ray->delta_dist_x;
+			ray->side_dist_x += ray->d_dist_x;
 			ray->map_x += ray->step_x;
 			ray->side = 0;
 		}
 		else
 		{
-			ray->side_dist_y += ray->delta_dist_y;
+			ray->side_dist_y += ray->d_dist_y;
 			ray->map_y += ray->step_y;
 			ray->side = 1;
 		}
@@ -78,12 +78,12 @@ void	calculate_ray(t_raycast *ray)
 {
 	if (ray->side == 0)
 	{
-		ray->perp_wall_dist = ray->side_dist_x - ray->delta_dist_x;
+		ray->perp_wall_dist = ray->side_dist_x - ray->d_dist_x;
 		ray->wall_x = ray->position_y + ray->perp_wall_dist * ray->ray_dir_y;
 	}
 	else
 	{
-		ray->perp_wall_dist = ray->side_dist_y - ray->delta_dist_y;
+		ray->perp_wall_dist = ray->side_dist_y - ray->d_dist_y;
 		ray->wall_x = ray->position_x + ray->perp_wall_dist * ray->ray_dir_x;
 	}
 	ray->wall_x -= floor(ray->wall_x);
@@ -101,7 +101,6 @@ void	calculate_ray(t_raycast *ray)
 void	get_pixel_texture(t_raycast *ray)
 {
 	ray->tex_x = (int)(ray->wall_x * (double)(ray->text->width));
-
 	if (ray->side == 0 && ray->ray_dir_x > 0)
 		ray->tex_x = ray->text->width - ray->tex_x - 1;
 	else if (ray->side == 1 && ray->ray_dir_y < 0)

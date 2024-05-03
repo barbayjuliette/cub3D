@@ -6,7 +6,7 @@
 /*   By: jbarbay <jbarbay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 12:10:03 by jbarbay           #+#    #+#             */
-/*   Updated: 2024/04/25 15:00:05 by jbarbay          ###   ########.fr       */
+/*   Updated: 2024/05/03 12:31:12 by jbarbay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@ typedef struct s_raycast
 	int			map_y;
 	double		side_dist_x;
 	double		side_dist_y;
-	double		delta_dist_x;
-	double		delta_dist_y;
+	double		d_dist_x;
+	double		d_dist_y;
 	double		perp_wall_dist;
 	int			step_x;
 	int			step_y;
@@ -98,6 +98,7 @@ typedef struct s_game_data
 	t_img		*west_text;
 	t_img		*screen;
 	t_raycast	*ray;
+	double		speed;
 }	t_game_data;
 
 // Map validation and reading
