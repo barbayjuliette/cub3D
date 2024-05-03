@@ -12,12 +12,13 @@
 
 #include "../../includes/cub3D.h"
 
+// We check if the square above/ below is empty
 int	square_is_empty(int i, int j, t_game_data *data)
 {
 	int	len;
 
 	len = ft_strlen(data->map[i]) - 1;
-	if (j > len) // above is empty
+	if (j > len)
 		return (1);
 	return (0);
 }
@@ -28,33 +29,23 @@ void	check_walls(int i, int j, int total_rows, t_game_data *data)
 		error_parsing("Map must be enclosed by walls 1", NULL, NULL, data);
 	else if (i > 0 && square_is_empty(i - 1, j, data) && data->map[i][j] != '1')
 		error_parsing("Map must be enclosed by walls 11", NULL, NULL, data);
-	else if (data->map[i + 1] && square_is_empty(i + 1, j, data) && data->map[i][j] != '1')
+	else if (data->map[i + 1] && square_is_empty(i + 1, j, data)
+		&& data->map[i][j] != '1')
 		error_parsing("Map must be enclosed by walls 22", NULL, NULL, data);
 	else if (j == 0 && data->map[i][j] != '1')
 		error_parsing("Map must be enclosed by walls 2", NULL, NULL, data);
-	else if (data->map[i][j + 1] && data->map[i][j + 1] == '\n' && data->map[i][j] != '1')
+	else if (data->map[i][j + 1] && data->map[i][j + 1] == '\n'
+		&& data->map[i][j] != '1')
 		error_parsing("Map must be enclosed by walls 3", NULL, NULL, data);
 	else if (!data->map[i][j + 1] && data->map[i][j] != '1')
 		error_parsing("Map must be enclosed by walls 4", NULL, NULL, data);
 }
 
-void	set_start_position(int	*pos, t_game_data *data, int i, int j)
+void	validate_map(t_game_data *data, int total_rows, int i)
 {
-	if (*pos > 0)
-		error_parsing("Position only one starting player", NULL, NULL, data);
-	data->player_dir = data->map[i][j];
-	data->player_pos[0] = j;
-	data->player_pos[1] = i;
-	(*pos)++;
-}
-
-void	validate_map(t_game_data *data, int total_rows)
-{
-	int	i;
 	int	j;
 	int	pos;
 
-	i = 0;
 	pos = 0;
 	while (data->map[i])
 	{
@@ -65,7 +56,8 @@ void	validate_map(t_game_data *data, int total_rows)
 				data->map[i][j] = '1';
 			check_walls(i, j, total_rows, data);
 			if (!ft_strrchr("01NSWE\n", data->map[i][j]))
-				error_parsing("Map must only contain characters 01NSWE", NULL, NULL, data);
+				error_parsing("Map: wrong character, om;y use 01NSWE",
+					NULL, NULL, data);
 			if (data->map[i][j] == 'N' || data->map[i][j] == 'S'
 			|| data->map[i][j] == 'W' || data->map[i][j] == 'E')
 				set_start_position(&pos, data, i, j);
@@ -74,16 +66,17 @@ void	validate_map(t_game_data *data, int total_rows)
 		i++;
 	}
 	if (pos == 0)
-		error_parsing("You must position the starting player", NULL, NULL, data);
+		error_parsing("Map: you need to position a starting player",
+			NULL, NULL, data);
 }
 
-char	**create_new_map(char **old_map, int total_rows, char *line, t_game_data *data)
+char	**create_new_map(char **old_map, int row, char *line, t_game_data *data)
 {
 	char	**new_map;
 	int		i;
 
 	i = 0;
-	new_map = (char **)malloc(sizeof(char *) * (total_rows + 1));
+	new_map = (char **)malloc(sizeof(char *) * (row + 1));
 	if (!new_map)
 		error_parsing("Memory allocation error", NULL, NULL, data);
 	while (old_map[i])
@@ -118,7 +111,6 @@ int	get_map(t_game_data *data)
 		map = create_new_map(map, total_rows, line, data);
 		line = get_next_line(data->fd);
 	}
-	// free(line);
 	if (total_rows == 0)
 		error_parsing("No map found", map, NULL, data);
 	data->map = map;

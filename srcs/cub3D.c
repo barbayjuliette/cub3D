@@ -12,24 +12,11 @@
 
 #include "../includes/cub3D.h"
 
-void	test_helper(t_game_data *data)
-{
-	printf("Path found for north: %s\n", data->north_path);
-	printf("Path found for south: %s\n", data->south_path);
-	printf("Path found for east: %s\n", data->east_path);
-	printf("Path found for west: %s\n", data->west_path);
-	printf("Colors floor: [%i, %i, %i]\n", data->floor_color[0], data->floor_color[1], data->floor_color[2]);
-	printf("Colors ceiling: [%i, %i, %i]\n", data->ceiling_color[0], data->ceiling_color[1], data->ceiling_color[2]);
-	printf("Player direction: %c\n", data->player_dir);
-	printf("Player position: [%i, %i]\n", data->player_pos[0], data->player_pos[1]);
-	print_map(data->map);
-}
-
 int	handle_input(int keysym, t_game_data *data)
 {
 	if (keysym == XK_Escape)
 	{
-		write(1, "Giving up so fast?\n", 19);
+		write(1, "Bye!\n", 19);
 		exit_program(data);
 	}
 	else if (keysym == ARROW_UP || keysym == KEY_W)
@@ -54,10 +41,12 @@ t_img	*create_img(t_game_data *data, char *path, char *dir)
 	img = malloc(sizeof(t_img));
 	if (!img)
 		malloc_error(data);
-	img->img_ptr = mlx_xpm_file_to_image(data->mlx_ptr, path, &(img->width), &(img->height));
+	img->img_ptr = mlx_xpm_file_to_image(data->mlx_ptr, path,
+			&(img->width), &(img->height));
 	if (img->img_ptr == NULL)
 		error_image(data, dir, img);
-	img->addr = (int *)mlx_get_data_addr(img->img_ptr, &(img->bpp), &(img->len), &(img->ed));
+	img->addr = (int *)mlx_get_data_addr(img->img_ptr, &(img->bpp),
+			&(img->len), &(img->ed));
 	return (img);
 }
 
@@ -69,13 +58,12 @@ void	create_textures(t_game_data *data)
 	data->south_text = create_img(data, data->south_path, "south");
 	data->west_text = create_img(data, data->west_path, "west");
 	data->east_text = create_img(data, data->east_path, "east");
-
-	// Create screen image to add pixels to it later
 	screen = malloc(sizeof(t_img));
 	if (!screen)
 		malloc_error(data);
 	screen->img_ptr = mlx_new_image(data->mlx_ptr, WIDTH, HEIGHT);
-	screen->addr = (int *)mlx_get_data_addr(screen->img_ptr, &(screen->bpp), &(screen->len), &(screen->ed));
+	screen->addr = (int *)mlx_get_data_addr(screen->img_ptr, &(screen->bpp),
+			&(screen->len), &(screen->ed));
 	data->screen = screen;
 }
 
@@ -89,9 +77,10 @@ void	start_cub(t_game_data *data)
 	if (!data->win_ptr)
 		malloc_error(data);
 	mlx_hook(data->win_ptr, 17, 0, exit_program, data);
-	mlx_hook(data->win_ptr, 2, 1L<<0, handle_input, data);
+	mlx_hook(data->win_ptr, 2, 1L << 0, handle_input, data);
 	raycasting(data);
-	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->screen->img_ptr, 0, 0);
+	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
+		data->screen->img_ptr, 0, 0);
 	mlx_loop(data->mlx_ptr);
 }
 
@@ -107,10 +96,8 @@ int	main(int argc, char *argv[])
 	data = initialize_data_args(fd);
 	get_textures_and_colors(data);
 	total_rows = get_map(data);
-	validate_map(data, total_rows);
+	validate_map(data, total_rows, 0);
 	close(fd);
 	start_cub(data);
-
-	// test_helper(data);
 	return (0);
 }

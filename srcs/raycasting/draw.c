@@ -17,9 +17,9 @@
 // Add the right pixel from the texture to the address
 // Address of screen = pixel from texture
 
-int		create_trgb(int t, int r, int g, int b)
+int	create_trgb(int t, int r, int g, int b)
 {
-	return(t << 24 | r << 16 | g << 8 | b);
+	return (t << 24 | r << 16 | g << 8 | b);
 }
 
 void	draw_line(t_game_data *data, t_raycast *ray, int x)
@@ -30,18 +30,18 @@ void	draw_line(t_game_data *data, t_raycast *ray, int x)
 	int		*text;
 
 	text = ray->text->addr;
-	step_pixel = 1.0 * ray->text->height / ray->line_height;
-	text_pos = (ray->line_start - HEIGHT / 2 + ray->line_height / 2) * step_pixel;
+	step_pixel = 1.0 * ray->text->height / ray->line_h;
+	text_pos = (ray->line_start - HEIGHT / 2 + ray->line_h / 2) * step_pixel;
 	y = ray->line_start;
 	while (y < ray->line_end)
 	{
-		ray->tex_y = (int)text_pos % (HEIGHT); // CHANGED
-		data->screen->addr[(y * WIDTH) + x] = text[(ray->tex_y * ray->text->width) + ray->tex_x];
+		ray->tex_y = (int)text_pos % (HEIGHT);
+		data->screen->addr[(y * WIDTH) + x]
+			= text[(ray->tex_y * ray->text->width) + ray->tex_x];
 		text_pos += step_pixel;
 		y++;
 	}
 }
-
 
 void	draw_ceiling(t_game_data *data, t_raycast *ray, int x)
 {
