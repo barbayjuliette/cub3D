@@ -3,80 +3,94 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbarbay <jbarbay@student.42singapore.sg    +#+  +:+       +#+        */
+/*   By: akolgano <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/17 13:46:24 by jbarbay           #+#    #+#             */
-/*   Updated: 2024/04/20 19:34:23 by jbarbay          ###   ########.fr       */
+/*   Created: 2023/09/28 14:21:27 by akolgano          #+#    #+#             */
+/*   Updated: 2023/09/28 14:21:28 by akolgano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "get_next_line.h"
+#include <stdlib.h>
 
-int	ft_strlcpy_gnl(char *dest, char *src, int destsize)
+void	ft_bzero_gnl(void *s, size_t n)
 {
-	int	i;
+	char	*str;
+	size_t	i;
 
+	str = (char *)s;
 	i = 0;
-	while (src[i]  && i < destsize - 1)
+	while (i < n)
 	{
-		dest[i] = src[i];
+		str[i] = '\0';
 		i++;
 	}
-	dest[i] = '\0';
-	return (1);
 }
 
-char	*ft_strchr_gnl(char *str, int c)
+void	*ft_calloc_gnl(size_t elementCount, size_t elementSize)
 {
-	int	i;
+	char	*res;
 
-	i = 0;
-	if (!str)
+	res = malloc(elementSize * elementCount);
+	if (!res)
 		return (NULL);
-	while (str[i])
-	{
-		if (str[i] == (unsigned char)c)
-			return ((char *)&str[i]);
-		i++;
-	}
-	return (NULL);
+	ft_bzero_gnl(res, elementSize * elementCount);
+	return (res);
 }
 
-int	ft_strlen_gnl(char *str)
+size_t	ft_strlen_gnl(char *s)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
-	while (str[i])
+	if (!s)
+		return (0);
+	while (s[i] != '\0')
 		i++;
 	return (i);
 }
 
-char	*ft_strjoin_gnl(char *s1, char *s2)
+char	*ft_strchr_gnl(char *s, int c)
 {
-	int		i;
-	int		j;
-	int		len;
-	char	*join;
+	int	i;
 
 	i = 0;
+	if (!s)
+		return (0);
+	if (c == '\0')
+		return ((char *)&s[ft_strlen_gnl(s)]);
+	while (s[i] != '\0')
+	{
+		if (s[i] == (char) c)
+			return ((char *)&s[i]);
+		i++;
+	}
+	return (0);
+}
+
+char	*ft_strjoin_gnl(char *s1, char *s2)
+{
+	size_t	i;
+	size_t	j;
+	char	*str;
+
+	if (!s1)
+	{
+		s1 = (char *)malloc(1 * sizeof(char));
+		s1[0] = '\0';
+	}
+	if (!s1 || !s2)
+		return (NULL);
+	str = malloc(sizeof(char) * ((ft_strlen_gnl(s1) + ft_strlen_gnl(s2)) + 1));
+	if (str == NULL)
+		return (NULL);
+	i = -1;
 	j = 0;
-	len = ft_strlen_gnl(s1) + ft_strlen_gnl(s2);
-	join = malloc(sizeof(char) * (len + 1));
-	while (s1[i])
-	{
-		join[j] = s1[i];
-		i++;
-		j++;
-	}
-	i = 0;
-	while (s2[i])
-	{
-		join[j] = s2[i];
-		i++;
-		j++;
-	}
-	join[j] = '\0';
+	if (s1)
+		while (s1[++i] != '\0')
+			str[i] = s1[i];
+	while (s2[j] != '\0')
+		str[i++] = s2[j++];
+	str[ft_strlen_gnl(s1) + ft_strlen_gnl(s2)] = '\0';
 	free(s1);
-	return (join);
+	return (str);
 }
