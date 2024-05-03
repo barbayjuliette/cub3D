@@ -35,6 +35,8 @@ t_game_data	*initialize_data_args(int fd)
 	data->win_ptr = NULL;
 	data->ray = NULL;
 	data->screen = NULL;
+	data->speed = 0.1233333;
+	//data->speed = 1;
 	return (data);
 }
 
