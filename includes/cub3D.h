@@ -93,7 +93,7 @@ typedef struct s_game_data
 	char	player_dir;
 	void	*mlx_ptr;
 	void	*win_ptr;
-	int flag;
+	double speed;
 	t_img	*north_text;
 	t_img	*south_text;
 	t_img	*east_text;
@@ -168,8 +168,14 @@ void	malloc_error(t_game_data *data);
 void	error_image(t_game_data *data, char *dir, t_img *texture);
 
 // Actions
-int	rerender(t_game_data *data);
-void	reraycasting(t_game_data *data);
-t_raycast	*recalculate_raycasting_data(t_game_data *data);
+int	rerender(t_game_data *data, int mode);
+void	reraycasting(t_game_data *data, int mode);
+t_raycast	*recalculate_raycasting_data(t_game_data *data, int mode);
+t_raycast	*move_forward(t_game_data *data);
+t_raycast	*move_back(t_game_data *data);
+t_raycast	*move_left(t_game_data *data);
+t_raycast	*move_right(t_game_data *data);
+t_raycast	*rotate_right(t_game_data *data);
+t_raycast	*rotate_left(t_game_data *data);
 
 #endif
