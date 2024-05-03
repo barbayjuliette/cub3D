@@ -14,9 +14,9 @@
 t_raycast	*rotate_right(t_game_data *data)
 {
 	t_raycast	*ray;
-	double	rotSpeed;
-	double	oldDirX;
-	double	oldPlaneX;
+	double		rotSpeed;
+	double		oldDirX;
+	double		oldPlaneX;
 
 	ray = (t_raycast *)malloc(sizeof(t_raycast));
 	if (!ray)
@@ -35,9 +35,9 @@ t_raycast	*rotate_right(t_game_data *data)
 t_raycast	*rotate_left(t_game_data *data)
 {
 	t_raycast	*ray;
-	double	rotSpeed;
-	double	oldDirX;
-	double	oldPlaneX;
+	double		rotSpeed;
+	double		oldDirX;
+	double		oldPlaneX;
 
 	ray = (t_raycast *)malloc(sizeof(t_raycast));
 	if (!ray)
