@@ -14,41 +14,43 @@
 t_raycast	*rotate_right(t_game_data *data)
 {
 	t_raycast	*ray;
-	double		rotSpeed;
-	double		oldDirX;
-	double		oldPlaneX;
+	double		v;
+	double		old_dirx;
+	double		old_planex;
 
 	ray = (t_raycast *)malloc(sizeof(t_raycast));
 	if (!ray)
 		malloc_error(data);
 	ray = data->ray;
-	rotSpeed = 0.1;
-	oldDirX = ray->direction_x;
-	ray->direction_x = ray->direction_x * cos(rotSpeed) - ray->direction_y * sin(rotSpeed);
-	ray->direction_y = oldDirX * sin(rotSpeed) + ray->direction_y * cos(rotSpeed);
-	oldPlaneX = ray->camera_plane_x;
-	ray->camera_plane_x = ray->camera_plane_x * cos(rotSpeed) - ray->camera_plane_y * sin(rotSpeed);
-	ray->camera_plane_y = oldPlaneX * sin(rotSpeed) + ray->camera_plane_y * cos(rotSpeed);
+	v = 0.1;
+	old_dirx = ray->direction_x;
+	ray->direction_x = ray->direction_x * cos(v) - ray->direction_y * sin(v);
+	ray->direction_y = old_dirx * sin(v) + ray->direction_y * cos(v);
+	old_planex = ray->camera_plane_x;
+	ray->camera_plane_x = ray->camera_plane_x * cos(v) - \
+		ray->camera_plane_y * sin(v);
+	ray->camera_plane_y = old_planex * sin(v) + ray->camera_plane_y * cos(v);
 	return (ray);
 }
 
 t_raycast	*rotate_left(t_game_data *data)
 {
 	t_raycast	*ray;
-	double		rotSpeed;
-	double		oldDirX;
-	double		oldPlaneX;
+	double		v;
+	double		old_dirx;
+	double		old_planex;
 
 	ray = (t_raycast *)malloc(sizeof(t_raycast));
 	if (!ray)
 		malloc_error(data);
 	ray = data->ray;
-	rotSpeed = 0.1;
-	oldDirX = ray->direction_x;
-	ray->direction_x = ray->direction_x * cos(-rotSpeed) - ray->direction_y * sin(-rotSpeed);
-	ray->direction_y = oldDirX * sin(-rotSpeed) + ray->direction_y * cos(-rotSpeed);
-	oldPlaneX = ray->camera_plane_x ;
-	ray->camera_plane_x = ray->camera_plane_x * cos(-rotSpeed) - ray->camera_plane_y * sin(-rotSpeed);
-	ray->camera_plane_y = oldPlaneX * sin(-rotSpeed) + ray->camera_plane_y * cos(-rotSpeed);
+	v = 0.1;
+	old_dirx = ray->direction_x;
+	ray->direction_x = ray->direction_x * cos(-v) - ray->direction_y * sin(-v);
+	ray->direction_y = old_dirx * sin(-v) + ray->direction_y * cos(-v);
+	old_planex = ray->camera_plane_x ;
+	ray->camera_plane_x = ray->camera_plane_x * cos(-v) - \
+		ray->camera_plane_y * sin(-v);
+	ray->camera_plane_y = old_planex * sin(-v) + ray->camera_plane_y * cos(-v);
 	return (ray);
 }
