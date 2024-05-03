@@ -16,7 +16,7 @@ int	handle_input(int keysym, t_game_data *data)
 {
 	if (keysym == XK_Escape)
 	{
-		write(1, "Bye!\n", 19);
+		write(1, "Bye!\n", 4);
 		exit_program(data);
 	}
 	else if (keysym == ARROW_UP || keysym == KEY_W)
