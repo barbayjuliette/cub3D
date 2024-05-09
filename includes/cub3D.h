@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbarbay <jbarbay@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jbarbay <jbarbay@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 12:10:03 by jbarbay           #+#    #+#             */
-/*   Updated: 2024/05/03 12:31:12 by jbarbay          ###   ########.fr       */
+/*   Updated: 2024/05/09 15:41:12 by jbarbay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,7 @@ int			open_file(char *filename);
 void		check_args(int argc);
 
 // Raycasting
-void		raycasting(t_game_data *data);
+void		raycasting(t_game_data *data, int mode);
 t_raycast	*initialize_raycasting_data(t_game_data *data);
 void		choose_texture(t_game_data *data, t_raycast *ray);
 void		calculate_vars(t_raycast *ray, int x);
@@ -155,8 +155,9 @@ void		position_west_east(t_raycast *ray, t_game_data *data);
 // Colors
 int			create_trgb(int t, int r, int g, int b);
 void		draw_line(t_game_data *data, t_raycast *ray, int x);
-void		draw_ceiling(t_game_data *data, t_raycast *ray, int x);
-void		draw_floor(t_game_data *data, t_raycast *ray, int x);
+void		draw_ceiling(t_game_data *data, t_raycast *ray, int x, int *color);
+void		draw_floor(t_game_data *data, t_raycast *ray, int x, int *color);
+
 
 // Calculations
 void		calculate_steps(t_raycast *ray);
@@ -173,7 +174,6 @@ void		error_image(t_game_data *data, char *dir, t_img *texture);
 
 // Actions
 int	rerender(t_game_data *data, int mode);
-void	reraycasting(t_game_data *data, int mode);
 t_raycast	*recalculate_raycasting_data(t_game_data *data, int mode);
 t_raycast	*move_forward(t_game_data *data);
 t_raycast	*move_back(t_game_data *data);

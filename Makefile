@@ -3,68 +3,15 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jbarbay <jbarbay@student.42.fr>            +#+  +:+       +#+         #
+#    By: jbarbay <jbarbay@student.42singapore.sg    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/27 15:11:22 by jbarbay           #+#    #+#              #
-#    Updated: 2024/04/25 14:54:21 by jbarbay          ###   ########.fr        #
+#    Updated: 2024/05/09 15:41:04 by jbarbay          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-# MAC
-# NAME = cub3D
-# CC = gcc
-# CFLAGS = -Wall -Wextra -Werror -g
-# MLX = mlxopengl
-# LIBFT = ./libft
-# LFLAGS = -L${LIBFT} -lft
-# LXFLAGS = -lmlx -framework OpenGL -framework AppKit
-# HEADER = cub3d.h
-
-# SRC = cub3D \
-# 		parsing/validation_helpers \
-# 		parsing/colors_validation \
-# 		parsing/map_validation \
-# 		parsing/get_arguments \
-# 		parsing/utils \
-# 		parsing/quoted_path \
-# 		raycasting/raycasting \
-# 		raycasting/draw \
-# 		raycasting/calculations
-
-# FIL = $(addsuffix .c, $(addprefix srcs/, $(SRC)))
-# LEAKS = -L/usr/local -llsan
-# OBJ = $(FIL:.c=.o)
-
-# BIN = $(addsuffix .o, $(SRC))
-
-# .PHONY: all clean fclean re bonus
-
-# all: $(NAME)
-
-# $(NAME): $(OBJ)
-# 	@make all -C libft
-# 	$(CC) -o $(NAME) -L $(MLX) $(LXFLAGS) -L./libft -lft $(OBJ)
-# 	@echo "Everything compiled"
-
-# clean:
-# 	rm -rf $(OBJ) $(B_OBJ)
-
-# fclean: clean
-# 	rm -f $(NAME)
-
-# re: fclean all
-
-# bonus: fclean $(B_OBJ)
-# 	$(CC) -o $(NAME) -L $(MLX) $(LXFLAGS) $(B_OBJ)
-
-# 	./$(NAME)
-
-
-# .SILENT: all clean fclean
-
 # LINUX
-SRCS =  srcs/cub3D.c \
-		srcs/parsing/validation_helpers.c \
+SRCS =	srcs/parsing/validation_helpers.c \
 		srcs/parsing/colors_validation.c \
 		srcs/parsing/map_validation.c \
 		srcs/parsing/get_arguments.c \
@@ -110,3 +57,56 @@ re: fclean all
 .PHONY: all clean fclean re
 
 .SILENT: all clean fclean
+
+# **************************************************************************** #
+
+# MAC
+# NAME = cub3D
+# CC = gcc
+# CFLAGS = -Wall -Wextra -Werror -g
+# MLX = mlxopengl
+# RM = rm -rf
+# LIBFT = ./libft
+# LFLAGS = -L${LIBFT} -lft
+# LXFLAGS = -lmlx -framework OpenGL -framework AppKit
+# HEADER = cub3d.h
+
+# SRCS =  srcs/cub3D.c \
+# 		srcs/parsing/validation_helpers.c \
+# 		srcs/parsing/colors_validation.c \
+# 		srcs/parsing/map_validation.c \
+# 		srcs/parsing/get_arguments.c \
+# 		srcs/parsing/utils.c \
+# 		srcs/parsing/quoted_path.c \
+# 		srcs/raycasting/raycasting.c \
+# 		srcs/raycasting/raycasting_helpers.c \
+# 		srcs/raycasting/draw.c \
+# 		srcs/raycasting/calculations.c \
+# 		srcs/actions/rerender.c \
+# 		srcs/actions/movement.c \
+# 		srcs/actions/rotate.c \
+# 		srcs/end_cub.c \
+
+# OBJS = ${SRCS:.c=.o}
+
+# .PHONY: all clean fclean re bonus
+
+# all: $(NAME)
+
+# $(NAME): $(OBJS)
+# 	@make all -C libft
+# 	$(CC) -o $(NAME) -L $(MLX) $(LXFLAGS) -L./libft -lft $(OBJS)
+# 	@echo "Everything compiled"
+
+# clean:
+# 		${RM} ${OBJS}
+# 		@make fclean -C libft
+
+# fclean: clean
+# 		${RM} ${NAME} ${OBJS}
+
+# re: fclean all
+
+# .PHONY: all clean fclean re
+
+# .SILENT: all clean fclean

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   calculations.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbarbay <jbarbay@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jbarbay <jbarbay@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:55:00 by jbarbay           #+#    #+#             */
-/*   Updated: 2024/05/03 12:31:12 by jbarbay          ###   ########.fr       */
+/*   Updated: 2024/05/09 14:59:16 by jbarbay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	wall_hit(t_game_data *data, t_raycast *ray)
 
 // Calculate the distance to the wall, using fisheye correction
 // Store which side of the wall was hit
-// The value wall_x represents the exact value where the wall was hit, 
+// The value wall_x represents the exact value where the wall was hit,
 // not just the integer coordinates of the wall.
 // If side == 1, it is a y-coordinate, if side == 0, it is an x-coordinate
 // But it is always an x-coordinate for the texture, because vertical lines
@@ -91,10 +91,6 @@ void	calculate_ray(t_raycast *ray)
 
 // tex_x refers to the x coordinate on the texture.
 // For one line, tex_x is constant.
-
-// Now that we know the x-coord of the texture,
-// we know that this coordinate will remain the same,
-// because we stay in the same vertical stripe of the screen.
 // Now we need a loop in the y-direction to give each pixel of
 // the vertical stripe the correct y-coordinate of the texture, called tex_y
 

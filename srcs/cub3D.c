@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbarbay <jbarbay@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jbarbay <jbarbay@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 12:08:26 by jbarbay           #+#    #+#             */
-/*   Updated: 2024/04/29 14:02:05 by jbarbay          ###   ########.fr       */
+/*   Updated: 2024/05/09 15:41:23 by jbarbay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	handle_input(int keysym, t_game_data *data)
 {
 	if (keysym == XK_Escape)
 	{
-		write(1, "Bye!\n", 4);
+		write(1, "Bye!\n", 5);
 		exit_program(data);
 	}
 	else if (keysym == ARROW_UP || keysym == KEY_W)
@@ -78,7 +78,7 @@ void	start_cub(t_game_data *data)
 		malloc_error(data);
 	mlx_hook(data->win_ptr, 17, 0, exit_program, data);
 	mlx_hook(data->win_ptr, 2, 1L << 0, handle_input, data);
-	raycasting(data);
+	raycasting(data, -1);
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
 		data->screen->img_ptr, 0, 0);
 	mlx_loop(data->mlx_ptr);

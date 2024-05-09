@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbarbay <jbarbay@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jbarbay <jbarbay@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 12:04:44 by jbarbay           #+#    #+#             */
-/*   Updated: 2024/05/03 12:31:12 by jbarbay          ###   ########.fr       */
+/*   Updated: 2024/05/09 15:16:00 by jbarbay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 // Make sure the camera plane is perpendicular to the direction,
 // but you can change the length of it.
-// The ratio between the length of the direction and 
+// The ratio between the length of the direction and
 // the camera plane determinates the FOV.
-// Here the direction vector is a bit longer than the camera plane, 
+// Here the direction vector is a bit longer than the camera plane,
 // so the FOV will be smaller than 90°
 
 t_raycast	*initialize_raycasting_data(t_game_data *data)
@@ -51,7 +51,7 @@ void	calculate_vars(t_raycast *ray, int x)
 		ray->d_dist_y = fabs(1 / ray->ray_dir_y);
 }
 
-// We check the coordinate of the player against 
+// We check the coordinate of the player against
 // the coordinate where the wall was hit.
 
 void	choose_texture(t_game_data *data, t_raycast *ray)
@@ -72,13 +72,16 @@ void	choose_texture(t_game_data *data, t_raycast *ray)
 	}
 }
 
-void	raycasting(t_game_data *data)
+void	raycasting(t_game_data *data, int mode)
 {
 	t_raycast	*ray;
 	int			x;
 
 	x = 0;
-	ray = initialize_raycasting_data(data);
+	if (mode >= 0)
+		ray = recalculate_raycasting_data(data, mode);
+	else
+		ray = initialize_raycasting_data(data);
 	while (x < WIDTH)
 	{
 		calculate_vars(ray, x);
@@ -89,8 +92,8 @@ void	raycasting(t_game_data *data)
 		calculate_line(ray);
 		get_pixel_texture(ray);
 		draw_line(data, ray, x);
-		draw_floor(data, ray, x);
-		draw_ceiling(data, ray, x);
+		draw_floor(data, ray, x, data->floor_color);
+		draw_ceiling(data, ray, x, data->ceiling_color);
 		x++;
 	}
 }

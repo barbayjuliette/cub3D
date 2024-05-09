@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rerender.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akolgano <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jbarbay <jbarbay@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 16:02:49 by akolgano          #+#    #+#             */
-/*   Updated: 2024/04/29 16:02:51 by akolgano         ###   ########.fr       */
+/*   Updated: 2024/05/09 15:21:03 by jbarbay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,29 +35,6 @@ t_raycast	*recalculate_raycasting_data(t_game_data *data, int mode)
 	return (ray);
 }
 
-void	reraycasting(t_game_data *data, int mode)
-{
-	t_raycast	*ray;
-	int			x;
-
-	x = 0;
-	ray = recalculate_raycasting_data(data, mode);
-	while (x < WIDTH)
-	{
-		calculate_vars(ray, x);
-		calculate_steps(ray);
-		wall_hit(data, ray);
-		calculate_ray(ray);
-		choose_texture(data, ray);
-		calculate_line(ray);
-		get_pixel_texture(ray);
-		draw_line(data, ray, x);
-		draw_floor(data, ray, x);
-		draw_ceiling(data, ray, x);
-		x++;
-	}
-}
-
 int	rerender(t_game_data *data, int mode)
 {
 	mlx_destroy_image(data->mlx_ptr, data->screen->img_ptr);
@@ -68,7 +45,7 @@ int	rerender(t_game_data *data, int mode)
 	data->screen->img_ptr = mlx_new_image(data->mlx_ptr, WIDTH, HEIGHT);
 	data->screen->addr = (int *)mlx_get_data_addr(data->screen->img_ptr,
 			&(data->screen->bpp), &(data->screen->len), &(data->screen->ed));
-	reraycasting(data, mode);
+	raycasting(data, mode);
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
 		data->screen->img_ptr, 0, 0);
 	return (0);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_validation.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbarbay <jbarbay@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jbarbay <jbarbay@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 17:40:17 by jbarbay           #+#    #+#             */
-/*   Updated: 2024/04/25 13:08:33 by jbarbay          ###   ########.fr       */
+/*   Updated: 2024/05/09 15:04:47 by jbarbay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	validate_map(t_game_data *data, int total_rows, int i)
 				data->map[i][j] = '1';
 			check_walls(i, j, total_rows, data);
 			if (!ft_strrchr("01NSWE\n", data->map[i][j]))
-				error_parsing("Map: wrong character, om;y use 01NSWE",
+				error_parsing("Map: wrong character, only use 01NSWE",
 					NULL, NULL, data);
 			if (data->map[i][j] == 'N' || data->map[i][j] == 'S'
 			|| data->map[i][j] == 'W' || data->map[i][j] == 'E')
